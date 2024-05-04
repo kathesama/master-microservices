@@ -20,6 +20,7 @@
         <module>account-service</module>
         <module>common-domain</module>
         <module>card-service</module>
+        <module>loan-service</module>
     </modules>
 
     <properties>
