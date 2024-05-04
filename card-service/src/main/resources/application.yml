@@ -1,9 +1,25 @@
+server:
+  port: 8001
+
 spring:
   application:
     name: card-service
   jackson:
     default-property-inclusion: non_null
     property-naming-strategy: SNAKE_CASE
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ''
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 
 #For PostgreSQL
 #  datasource:

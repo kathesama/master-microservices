@@ -3,16 +3,12 @@ package com.kathesama.app.master.microservices.service.card.domain.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cards {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Card {
     private Long cardId;
 
     private String mobileNumber;
@@ -21,9 +17,9 @@ public class Cards {
 
     private String cardType;
 
-    private int totalLimit;
+    private Double totalLimit;
 
-    private int amountUsed;
+    private Double amountUsed;
 
-    private int availableAmount;
+    private Double availableAmount;
 }

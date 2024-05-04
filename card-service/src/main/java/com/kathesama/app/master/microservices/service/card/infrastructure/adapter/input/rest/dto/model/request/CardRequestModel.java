@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
-@Schema(name = "Cards",
+@Schema(name = "Card",
         description = "Schema to hold Card information"
 )
 @Data
@@ -40,19 +40,19 @@ public class CardRequestModel {
             description = "Total amount limit available against a card", example = "100000"
     )
     @JsonProperty("totalLimit")
-    private int totalLimit;
+    private Double totalLimit;
 
     @PositiveOrZero(message = "Total amount used should be equal or greater than zero")
     @Schema(
-            description = "Total amount used by a Customer", example = "1000"
+            description = "Total amount used by a Customer", example = "1000.00"
     )
     @JsonProperty("amountUsed")
-    private int amountUsed;
+    private Double amountUsed;
 
     @PositiveOrZero(message = "Total available amount should be equal or greater than zero")
     @Schema(
-            description = "Total available amount against a card", example = "90000"
+            description = "Total available amount against a card", example = "90000.00"
     )
     @JsonProperty("availableAmount")
-    private int availableAmount;
+    private Double availableAmount;
 }

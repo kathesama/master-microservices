@@ -8,7 +8,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class CardsResponseModel {
+public class CardResponseModel {
 
     @JsonProperty("cardId")
     private Long cardId;

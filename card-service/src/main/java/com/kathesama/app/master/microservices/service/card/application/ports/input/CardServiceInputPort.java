@@ -1,27 +1,27 @@
 package com.kathesama.app.master.microservices.service.card.application.ports.input;
 
-import com.kathesama.app.master.microservices.service.card.domain.model.Cards;
+import com.kathesama.app.master.microservices.service.card.domain.model.Card;
 
 public interface CardServiceInputPort {
     /**
      *
      * @param mobileNumber - Mobile Number of the Customer
      */
-    Cards save(String mobileNumber);
+    Card createCard(String mobileNumber);
 
     /**
      *
      * @param mobileNumber - Input mobile Number
      *  @return Card Details based on a given mobileNumber
      */
-    Cards fetch(String mobileNumber);
+    Card fetch(String mobileNumber);
 
     /**
      *
-     * @param cardsDto - Cards Object
+     * @param cardDto - Card Object
      * @return boolean indicating if the update of card details is successful or not
      */
-    Cards update(Cards cardsDto);
+    Card update(String mobileNumber, Card cardDto);
 
     /**
      *

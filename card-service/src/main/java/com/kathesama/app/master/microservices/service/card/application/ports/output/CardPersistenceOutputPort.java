@@ -5,9 +5,9 @@ import com.kathesama.app.master.microservices.service.card.infrastructure.adapte
 import java.util.Optional;
 
 public interface CardPersistenceOutputPort {
-    Optional<CardEntity> findByCustomerId(Long customerId);
+    Optional<CardEntity> findByMobileNumber(String mobileNumber);
 
-    void deleteByCustomerId(Long customerId);
+    void deleteByCardId(Long cardId);
 
     /**
      *

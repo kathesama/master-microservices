@@ -50,7 +50,6 @@ public class GlobalControllerAdvice {
         ERROR_CODE_MAPPING.put(ResourceNotFoundException.class, RESOURCE_NOT_FOUND);
     }
 
-
     private static ErrorResponse createErrorResponse(ErrorCatalog errorType) {
         return ErrorResponse.builder()
                 .code(errorType.getCode())
@@ -122,5 +121,4 @@ public class GlobalControllerAdvice {
 
         return input;
     }
-
 }

@@ -75,9 +75,10 @@ public class AccountsController {
                                                                     @Pattern(regexp="(^$|[0-9]{10})",
                                                                             message = "Mobile number must be 10 digits")
                                                            String mobileNumber) {
-        Customer customerDto = accountService.fetchAccount(mobileNumber);
         return ResponseEntity.status(HttpStatus.OK).body(
-                customerMapper.toCustomerResponse(customerDto)
+                customerMapper.toCustomerResponse(
+                        accountService.fetchAccount(mobileNumber)
+                )
         );
     }
 

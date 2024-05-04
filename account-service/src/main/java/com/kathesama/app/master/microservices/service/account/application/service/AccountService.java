@@ -26,7 +26,6 @@ import java.util.Random;
 @Service
 @RequiredArgsConstructor
 public class AccountService implements AccountServiceInputPort {
-    private final AccountRepository accountRepository;
     private final AccountPersistenceOutputPort accountPersistencePort;
     private final AccountPersistenceMapper accountMapper;
 
@@ -43,11 +42,6 @@ public class AccountService implements AccountServiceInputPort {
       }
 
       CustomerEntity customerEntity = customerMapper.toCustomerEntity(customer);
-
-//      customerEntity.setCreatedAt(LocalDateTime.now());
-//      customerEntity.setUpdatedAt(LocalDateTime.now());
-//      customerEntity.setCreatedBy("unknown");
-//      customerEntity.setUpdatedBy("unknown");
 
       customerEntity = customerPersistencePort.save(customerEntity);
 

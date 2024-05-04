@@ -10,28 +10,29 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "cards")
 public class CardEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="cardId")
+    @Column(name="card_id")
     private Long cardId;
 
-    @Column(name="mobileNumber")
+//    @Column(name="mobileNumber")
     private String mobileNumber;
 
-    @Column(name="cardNumber")
+//    @Column(name="cardNumber")
     private String cardNumber;
 
-    @Column(name="cardType")
+//    @Column(name="cardType")
     private String cardType;
 
-    @Column(name="totalLimit")
-    private int totalLimit;
+//    @Column(name="totalLimit")
+    private Double totalLimit;
 
-    @Column(name="amountUsed")
-    private int amountUsed;
+//    @Column(name="amountUsed")
+    private Double amountUsed;
 
-    @Column(name="availableAmount")
-    private int availableAmount;
+//    @Column(name="availableAmount")
+    private Double availableAmount;
 }
