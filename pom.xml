@@ -19,6 +19,7 @@
     <modules>
         <module>account-service</module>
         <module>common-domain</module>
+        <module>card-service</module>
     </modules>
 
     <properties>
@@ -87,7 +88,6 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${spring-doc-openapi.version}</version>
         </dependency>
-
     </dependencies>
 
     <build>
