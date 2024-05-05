@@ -1,13 +1,13 @@
-package com.kathesama.app.master.microservices.service.card.infrastructure.adapter.input.rest.controller;
+package com.kathesama.app.master.microservices.service.loan.infrastructure.adapter.input.rest.controller;
 
 import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.dto.model.response.ErrorResponseDto;
 import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.dto.model.response.ResponseBasicModel;
-import com.kathesama.app.master.microservices.service.card.application.ports.input.CardServiceInputPort;
-import com.kathesama.app.master.microservices.service.card.domain.model.Card;
-import com.kathesama.app.master.microservices.service.card.infrastructure.adapter.input.rest.dto.model.request.CardRequestModel;
-import com.kathesama.app.master.microservices.service.card.infrastructure.adapter.input.rest.dto.model.response.CardResponseModel;
-import com.kathesama.app.master.microservices.service.card.infrastructure.adapter.input.rest.mapper.CardRestMapper;
 import com.kathesama.app.master.microservices.service.common.util.common.SuccessCatalog;
+import com.kathesama.app.master.microservices.service.loan.application.ports.input.LoanServiceInputPort;
+import com.kathesama.app.master.microservices.service.loan.domain.model.Loan;
+import com.kathesama.app.master.microservices.service.loan.infrastructure.adapter.input.rest.dto.model.request.LoanRequestModel;
+import com.kathesama.app.master.microservices.service.loan.infrastructure.adapter.input.rest.dto.model.response.LoanResponseModel;
+import com.kathesama.app.master.microservices.service.loan.infrastructure.adapter.input.rest.mapper.LoanRestMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -27,20 +27,20 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(
         name = "CRUD REST APIs for Accounts in EazyBank",
-        description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE account details"
+        description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE loan details"
 )
 @Slf4j
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path= "/cards", produces = {MediaType.APPLICATION_JSON_VALUE})
-public class CardRestController {
-    private final CardServiceInputPort service;
-    private final CardRestMapper mapper;
+@RequestMapping(path= "/loans", produces = {MediaType.APPLICATION_JSON_VALUE})
+public class LoanRestController {
+    private final LoanServiceInputPort service;
+    private final LoanRestMapper mapper;
 
     @GetMapping("/api/v1/hello")
     public String helloWorld() {
-        return "Hello card";
+        return "Hello loan";
     }
 
     @Operation(
@@ -62,13 +62,13 @@ public class CardRestController {
     }
     )
     @GetMapping("/api/v1/{mobileNumber}")
-    public ResponseEntity<CardResponseModel> fetchAccountDetails(@PathVariable
+    public ResponseEntity<LoanResponseModel> fetchAccountDetails(@PathVariable
                                                                 @Pattern(regexp="(^$|[0-9]{10})",
                                                                         message = "Mobile number must be 10 digits")
                                                                 String mobileNumber) {
-        Card card = service.fetch(mobileNumber);
+        Loan card = service.fetch(mobileNumber);
         return ResponseEntity.status(HttpStatus.OK).body(
-                mapper.toCardResponse(card)
+                mapper.toLoanResponse(card)
         );
     }
 
@@ -91,15 +91,15 @@ public class CardRestController {
     }
     )
     @PostMapping("/api/v1/{mobileNumber}")
-    public ResponseEntity<CardResponseModel> createAccount(@PathVariable
+    public ResponseEntity<LoanResponseModel> createAccount(@PathVariable
                                                               @NotEmpty(message = "Customer mobile number must not be blank")
                                                               @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
                                                               String mobileNumber) {
         return ResponseEntity
             .status(Integer.parseInt(SuccessCatalog.STATUS_200.getCode()))
             .body(
-                mapper.toCardResponse(
-                        service.createCard(mobileNumber)
+                mapper.toLoanResponse(
+                        service.createLoan(mobileNumber)
                 )
             );
     }
@@ -127,16 +127,16 @@ public class CardRestController {
     }
     )
     @PutMapping("/api/v1/{mobileNumber}")
-    public ResponseEntity<CardResponseModel> updateAccountDetails(@PathVariable
+    public ResponseEntity<LoanResponseModel> updateAccountDetails(@PathVariable
                                                                     @NotEmpty(message = "Customer mobile number must not be blank")
                                                                     @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
                                                                     String mobileNumber,
-                                                                @Valid @RequestBody CardRequestModel cardRequestModel) {
+                                                                @Valid @RequestBody LoanRequestModel cardRequestModel) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(
-                        mapper.toCardResponse(
-                                service.update(mobileNumber, mapper.toCard(cardRequestModel))
+                        mapper.toLoanResponse(
+                                service.update(mobileNumber, mapper.toLoan(cardRequestModel))
                         )
                 );
     }

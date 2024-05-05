@@ -1,6 +1,5 @@
 package com.kathesama.app.master.microservices.service.card.domain.model;
 
-import jakarta.persistence.*;
 import lombok.*;
 
 @Getter

@@ -7,8 +7,8 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
-@Schema(name = "Card",
-        description = "Schema to hold Card information"
+@Schema(name = "Loan",
+        description = "Schema to hold Loan information"
 )
 @Data
 public class CardRequestModel {
@@ -20,17 +20,17 @@ public class CardRequestModel {
     @JsonProperty("mobileNumber")
     private String mobileNumber;
 
-    @NotEmpty(message = "Card Number can not be a null or empty")
+    @NotEmpty(message = "Loan Number can not be a null or empty")
     @Pattern(regexp="(^$|[0-9]{12})",message = "CardNumber must be 12 digits")
     @Schema(
-            description = "Card Number of the customer", example = "100646930341"
+            description = "Loan Number of the customer", example = "100646930341"
     )
     @JsonProperty("cardNumber")
     private String cardNumber;
 
     @NotEmpty(message = "CardType can not be a null or empty")
     @Schema(
-            description = "Type of the card", example = "Credit Card"
+            description = "Type of the card", example = "Credit Loan"
     )
     @JsonProperty("cardType")
     private String cardType;
