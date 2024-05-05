@@ -1,4 +1,4 @@
-package com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.dto.model.response;
+package com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;

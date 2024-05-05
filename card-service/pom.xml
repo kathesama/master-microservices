@@ -8,9 +8,12 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <packaging>jar</packaging>
+
     <artifactId>card-service</artifactId>
 
     <properties>
+        <start-class>com.kathesama.app.master.microservices.service.card.CardserviceApplication</start-class>
     </properties>
 
     <dependencies>
@@ -18,24 +21,28 @@
             <groupId>com.kathesama.app</groupId>
             <artifactId>common-domain</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.kathesama.app</groupId>
             <artifactId>account-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.kathesama.app</groupId>
-            <artifactId>account-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.4.1</version>
+                <configuration>
+                    <to>
+                        <image>kathesama/${project.artifactId}:s4</image>
+                    </to>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
