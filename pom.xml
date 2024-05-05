@@ -17,8 +17,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>account-service</module>
         <module>common-domain</module>
+        <module>account-service</module>
         <module>card-service</module>
         <module>loan-service</module>
     </modules>
@@ -27,6 +27,7 @@
         <java.version>17</java.version>
         <lombok.version>1.18.32</lombok.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+        <apache-maven-jar-plugin.version>3.4.1</apache-maven-jar-plugin.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <spring-doc-openapi.version>2.5.0</spring-doc-openapi.version>

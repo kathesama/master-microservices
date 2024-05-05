@@ -1,7 +1,7 @@
 package com.kathesama.app.master.microservices.service.loan.infrastructure.adapter.input.rest.controller;
 
-import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.dto.model.response.ErrorResponseDto;
-import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.dto.model.response.ResponseBasicModel;
+import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ErrorResponseDto;
+import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ResponseBasicModel;
 import com.kathesama.app.master.microservices.service.common.util.common.SuccessCatalog;
 import com.kathesama.app.master.microservices.service.loan.application.ports.input.LoanServiceInputPort;
 import com.kathesama.app.master.microservices.service.loan.domain.model.Loan;
@@ -38,9 +38,9 @@ public class LoanRestController {
     private final LoanServiceInputPort service;
     private final LoanRestMapper mapper;
 
-    @GetMapping("/api/v1/hello")
+    @GetMapping("/api/v1/test")
     public String helloWorld() {
-        return "Hello loan";
+        return "Responding from loans microservice...";
     }
 
     @Operation(

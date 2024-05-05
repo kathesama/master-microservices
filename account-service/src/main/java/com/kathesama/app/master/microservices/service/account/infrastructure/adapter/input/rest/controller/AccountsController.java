@@ -1,15 +1,14 @@
 package com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.controller;
 
 import com.kathesama.app.master.microservices.service.account.application.ports.input.AccountServiceInputPort;
-import com.kathesama.app.master.microservices.service.account.domain.model.Customer;
 import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.dto.model.request.AccountRequestModel;
 import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.dto.model.request.CustomerRequestModel;
 import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.dto.model.response.AccountResponse;
 import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.dto.model.response.CustomerResponse;
-import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.dto.model.response.ErrorResponseDto;
-import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.dto.model.response.ResponseBasicModel;
 import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.mapper.AccountRestMapper;
 import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.mapper.CustomerRestMapper;
+import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ErrorResponseDto;
+import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ResponseBasicModel;
 import com.kathesama.app.master.microservices.service.common.util.common.SuccessCatalog;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -47,9 +46,9 @@ public class AccountsController {
     private final CustomerRestMapper customerMapper;
     private final AccountRestMapper accountMapper;
 
-    @GetMapping("/api/v1/hello")
+    @GetMapping("/api/v1/test")
     public String helloWorld() {
-        return "Hello World";
+        return "Responding from Accounts microservice...";
     }
 
     @Operation(
