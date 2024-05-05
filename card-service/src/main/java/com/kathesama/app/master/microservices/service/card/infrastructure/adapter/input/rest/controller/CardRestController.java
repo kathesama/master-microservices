@@ -1,12 +1,12 @@
 package com.kathesama.app.master.microservices.service.card.infrastructure.adapter.input.rest.controller;
 
-import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.dto.model.response.ErrorResponseDto;
-import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.dto.model.response.ResponseBasicModel;
 import com.kathesama.app.master.microservices.service.card.application.ports.input.CardServiceInputPort;
 import com.kathesama.app.master.microservices.service.card.domain.model.Card;
 import com.kathesama.app.master.microservices.service.card.infrastructure.adapter.input.rest.dto.model.request.CardRequestModel;
 import com.kathesama.app.master.microservices.service.card.infrastructure.adapter.input.rest.dto.model.response.CardResponseModel;
 import com.kathesama.app.master.microservices.service.card.infrastructure.adapter.input.rest.mapper.CardRestMapper;
+import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ErrorResponseDto;
+import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ResponseBasicModel;
 import com.kathesama.app.master.microservices.service.common.util.common.SuccessCatalog;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -38,9 +38,9 @@ public class CardRestController {
     private final CardServiceInputPort service;
     private final CardRestMapper mapper;
 
-    @GetMapping("/api/v1/hello")
+    @GetMapping("/api/v1/test")
     public String helloWorld() {
-        return "Hello card";
+        return "Responding from cards microservice...";
     }
 
     @Operation(

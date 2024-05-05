@@ -8,13 +8,15 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <packaging>jar</packaging>
+
     <artifactId>account-service</artifactId>
 
     <properties>
+        <start-class>com.kathesama.app.master.microservices.service.account.AccountserviceApplication</start-class>
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>com.kathesama.app</groupId>
             <artifactId>common-domain</artifactId>
@@ -23,7 +25,28 @@
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <image>-->
+<!--                        <name>eazybytes/${project.artifactId}:s4</name>-->
+<!--                    </image>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.4.1</version>
+                <configuration>
+                    <to>
+                        <image>kathesama/${project.artifactId}:s4</image>
+                    </to>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
