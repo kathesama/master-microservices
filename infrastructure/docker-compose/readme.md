@@ -1,0 +1,1 @@
+Rename each .env_example you need to .env, then fill the right value on each parameter

@@ -1,0 +1,119 @@
+services:
+
+  accountsdb:
+    container_name: accountsdb
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: accountsdb
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
+
+  loansdb:
+    container_name: loansdb
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: loansdb
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
+
+  cardsdb:
+    container_name: cardsdb
+    ports:
+      - 3308:3306
+    environment:
+      MYSQL_DATABASE: cardsdb
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
+
+  configserver:
+    image: "kathesama/config-server:v1"
+    container_name: configserver-ms
+    ports:
+      - "8071:8071"
+    healthcheck:
+      test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    extends:
+      file: common-config.yml
+      service: microservice-base-config
+
+  accounts:
+    image: "kathesama/account-service:v1"
+    container_name: accounts-ms
+    ports:
+      - "8000:8000"
+    depends_on:
+      accountsdb:
+        condition: service_healthy
+      configserver:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - kathesamanet
+    environment:
+      SPRING_APPLICATION_NAME: "account-service"
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL_ACCOUNT}
+    extends:
+      file: common-config.yml
+      service: microservice-config-server-config
+
+  cards:
+    image: "kathesama/card-service:v1"
+    container_name: cards-ms
+    ports:
+      - "8001:8001"
+    depends_on:
+      cardsdb:
+        condition: service_healthy
+      configserver:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - kathesamanet
+    environment:
+      SPRING_APPLICATION_NAME: "card-service"
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL_CARD}
+    extends:
+      file: common-config.yml
+      service: microservice-config-server-config
+
+  loans:
+    image: "kathesama/loan-service:v1"
+    container_name: loans-ms
+    ports:
+      - "8002:8002"
+    depends_on:
+      loansdb:
+        condition: service_healthy
+      configserver:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - kathesamanet
+    environment:
+      SPRING_APPLICATION_NAME: "loan-service"
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL_LOAN}
+    extends:
+      file: common-config.yml
+      service: microservice-config-server-config
+
+networks:
+  kathesamanet:
+    driver: "bridge"
