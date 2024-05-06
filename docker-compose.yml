@@ -3,7 +3,7 @@ services:
     image: "kathesama/account-service:s4"
     container_name: accounts-ms
     ports:
-      - "8000:8000"
+      - "8003:8003"
     deploy:
       resources:
         limits:

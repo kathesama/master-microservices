@@ -1,5 +1,5 @@
 server:
-  port: 18000
+  port: 8003
 
 spring:
   application:
@@ -21,14 +21,9 @@ spring:
       ddl-auto: update
     show-sql: true
   config:
-    activate:
-      on-profile: "dev-account"
     import:
       - "application_qa.yml"
       - "application_prod.yml"
-  profiles:
-    active:
-      - "dev-account"
 
 build:
   version: "3.0"

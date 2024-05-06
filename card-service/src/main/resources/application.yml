@@ -1,5 +1,5 @@
 server:
-  port: 18001
+  port: 8001
 
 spring:
   application:
@@ -21,14 +21,9 @@ spring:
       ddl-auto: update
     show-sql: true
   config:
-    activate:
-      on-profile: "dev-card"
     import:
-      - "application_qa.yaml"
-      - "application_prod.yaml"
-  profiles:
-    active:
-      - "dev-card"
+      - "application_qa.yml"
+      - "application_prod.yml"
 
 build:
   version: "3.0"

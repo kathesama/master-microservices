@@ -8,6 +8,7 @@ import com.kathesama.app.master.microservices.service.loan.domain.model.Loan;
 import com.kathesama.app.master.microservices.service.loan.infrastructure.adapter.input.rest.dto.model.request.LoanRequestModel;
 import com.kathesama.app.master.microservices.service.loan.infrastructure.adapter.input.rest.dto.model.response.LoanResponseModel;
 import com.kathesama.app.master.microservices.service.loan.infrastructure.adapter.input.rest.mapper.LoanRestMapper;
+import com.kathesama.app.master.microservices.service.loan.util.LoansContactInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,11 +20,16 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Tag(
         name = "CRUD REST APIs for Accounts in EazyBank",
@@ -38,9 +44,25 @@ public class LoanRestController {
     private final LoanServiceInputPort service;
     private final LoanRestMapper mapper;
 
-    @GetMapping("/api/v1/test")
-    public String helloWorld() {
-        return "Responding from loans microservice...";
+    @Value("${build.version}")
+    private String buildVersion;
+
+    private final Environment environment;
+
+    private final LoansContactInfo loansContactInfo;
+
+
+    @GetMapping("/api/v1/info")
+    public ResponseEntity<Object> getInfo() {
+        Map<String, Object> body = new HashMap<>();
+        body.put("Message", "Responding from loan microservice.");
+        body.put("Build version", buildVersion);
+        body.put("Java version", environment.getProperty("java.version"));
+        body.put("Contact info ", loansContactInfo);
+
+        return ResponseEntity
+                .status(HttpStatus.I_AM_A_TEAPOT)
+                .body(body);
     }
 
     @Operation(
