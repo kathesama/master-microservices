@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+infrastructure/docker-compose/default/.env
+infrastructure/docker-compose/prod/.env
+infrastructure/docker-compose/qa/.env
