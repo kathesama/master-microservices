@@ -7,7 +7,8 @@ import com.kathesama.app.master.microservices.service.account.infrastructure.ada
 import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.dto.model.response.CustomerResponse;
 import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.mapper.AccountRestMapper;
 import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.mapper.CustomerRestMapper;
-import com.kathesama.app.master.microservices.service.account.infrastructure.configuration.AccountsContactInfo;
+
+import com.kathesama.app.master.microservices.service.account.util.AccountsContactInfo;
 import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ErrorResponseDto;
 import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ResponseBasicModel;
 import com.kathesama.app.master.microservices.service.common.util.common.SuccessCatalog;

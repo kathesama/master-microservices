@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "prod-card"
+
+build:
+  version: "1.0"
+
+cards:
+  message: "Welcome to EazyBank cards related local APIs "
+  contactDetails:
+    name: "Katherine Aguirre - Product Owner"
+    email: "kathesama@gmail.com"
+  onCallSupport:
+    - (000) 555-1234
+    - (000) 555-5678

@@ -1,6 +1,6 @@
 package com.kathesama.app.master.microservices.service.account;
 
-import com.kathesama.app.master.microservices.service.account.infrastructure.configuration.AccountsContactInfo;
+import com.kathesama.app.master.microservices.service.account.util.AccountsContactInfo;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;

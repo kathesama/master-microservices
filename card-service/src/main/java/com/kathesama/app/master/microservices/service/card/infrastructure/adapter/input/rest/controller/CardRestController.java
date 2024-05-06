@@ -1,5 +1,6 @@
 package com.kathesama.app.master.microservices.service.card.infrastructure.adapter.input.rest.controller;
 
+import com.kathesama.app.master.microservices.service.card.util.CardsContactInfo;
 import com.kathesama.app.master.microservices.service.card.application.ports.input.CardServiceInputPort;
 import com.kathesama.app.master.microservices.service.card.domain.model.Card;
 import com.kathesama.app.master.microservices.service.card.infrastructure.adapter.input.rest.dto.model.request.CardRequestModel;
@@ -19,11 +20,16 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Tag(
         name = "CRUD REST APIs for Accounts in EazyBank",
@@ -38,9 +44,25 @@ public class CardRestController {
     private final CardServiceInputPort service;
     private final CardRestMapper mapper;
 
-    @GetMapping("/api/v1/test")
-    public String helloWorld() {
-        return "Responding from cards microservice...";
+    @Value("${build.version}")
+    private String buildVersion;
+
+    private final Environment environment;
+
+    private final CardsContactInfo cardsContactInfo;
+
+
+    @GetMapping("/api/v1/info")
+    public ResponseEntity<Object> getInfo() {
+        Map<String, Object> body = new HashMap<>();
+        body.put("Message", "Responding from card microservice.");
+        body.put("Build version", buildVersion);
+        body.put("Java version", environment.getProperty("java.version"));
+        body.put("Contact info ", cardsContactInfo);
+
+        return ResponseEntity
+                .status(HttpStatus.I_AM_A_TEAPOT)
+                .body(body);
     }
 
     @Operation(

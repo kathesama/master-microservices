@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa-card"
+
+build:
+  version: "2.0"
+
+cards:
+  message: "Welcome to EazyBank cards related local APIs "
+  contactDetails:
+    name: "Katherine Aguirre - QA Leader"
+    email: "kathesama@gmail.com"
+  onCallSupport:
+    - (000) 555-1234
+    - (000) 555-5678

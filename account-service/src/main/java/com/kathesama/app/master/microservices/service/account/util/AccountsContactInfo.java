@@ -1,4 +1,4 @@
-package com.kathesama.app.master.microservices.service.account.infrastructure.configuration;
+package com.kathesama.app.master.microservices.service.account.util;
 
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
