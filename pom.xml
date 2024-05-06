@@ -21,10 +21,12 @@
         <module>account-service</module>
         <module>card-service</module>
         <module>loan-service</module>
+        <module>infrastructure</module>
     </modules>
 
     <properties>
         <java.version>17</java.version>
+        <spring-cloud.version>2023.0.1</spring-cloud.version>
         <lombok.version>1.18.32</lombok.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <apache-maven-jar-plugin.version>3.4.1</apache-maven-jar-plugin.version>

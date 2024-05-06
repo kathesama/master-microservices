@@ -1,13 +1,8 @@
-spring:
-  config:
-    activate:
-      on-profile: "qa"
-
 build:
   version: "2.0"
 
-cards:
-  message: "Welcome to EazyBank cards related local APIs "
+loans:
+  message: "Welcome to EazyBank loan related local APIs "
   contactDetails:
     name: "Katherine Aguirre - QA Leader"
     email: "kathesama@gmail.com"
