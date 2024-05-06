@@ -1,12 +1,21 @@
 server:
   port: 8001
 
+logging:
+  level:
+    org.hibernate.SQL: debug
+
 spring:
   application:
     name: card-service
   jackson:
     default-property-inclusion: non_null
     property-naming-strategy: SNAKE_CASE
+  profiles:
+    active: "qa"
+  config:
+    import: optional:configserver:http://localhost:8071
+  # datasource For H2 DB
   datasource:
     url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver
@@ -20,22 +29,6 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-  config:
-    import:
-      - "application_qa.yml"
-      - "application_prod.yml"
-
-build:
-  version: "3.0"
-
-cards:
-  message: "Welcome to EazyBank card related local APIs "
-  contactDetails:
-    name: "Katherine Aguirre - Developer"
-    email: "kathesama@gmail.com"
-  onCallSupport:
-    - (000) 555-1234
-    - (000) 555-5678
 
 #For PostgreSQL
 #  datasource:
@@ -59,7 +52,3 @@ cards:
 #    show-sql: true
 #    hibernate:
 #      ddl-auto: create
-
-logging:
-  level:
-    org.hibernate.SQL: debug

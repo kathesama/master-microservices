@@ -1,15 +1,10 @@
-spring:
-  config:
-    activate:
-      on-profile: "prod"
-
 build:
-  version: "1.0"
+  version: "3.0"
 
 accounts:
   message: "Welcome to EazyBank accounts related local APIs "
   contactDetails:
-    name: "Katherine Aguirre - Product Owner"
+    name: "Katherine Aguirre - Developer"
     email: "kathesama@gmail.com"
   onCallSupport:
     - (000) 555-1234

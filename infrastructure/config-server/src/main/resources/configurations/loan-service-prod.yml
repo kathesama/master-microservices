@@ -1,0 +1,11 @@
+build:
+  version: "1.0"
+
+loans:
+  message: "Welcome to EazyBank loan related local APIs "
+  contactDetails:
+    name: "Katherine Aguirre - Product Owner"
+    email: "kathesama@gmail.com"
+  onCallSupport:
+    - (000) 555-1234
+    - (000) 555-5678
