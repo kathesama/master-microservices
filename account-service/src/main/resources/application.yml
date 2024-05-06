@@ -21,6 +21,18 @@ spring:
       ddl-auto: update
     show-sql: true
 
+build:
+  version: "3.0"
+
+accounts:
+  message: "Welcome to EazyBank accounts related local APIs "
+  contactDetails:
+    name: "Katherine Aguirre - Developer"
+    email: "kathesama@gmail.com"
+  onCallSupport:
+    - (000) 555-1234
+    - (000) 555-5678
+
 #For PostgreSQL
 #  datasource:
 #    url: ${DB_HOST}
