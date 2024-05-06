@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: "prod-account"
+      on-profile: "prod"
 
 build:
   version: "1.0"

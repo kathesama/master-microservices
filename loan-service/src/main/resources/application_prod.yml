@@ -6,8 +6,8 @@ spring:
 build:
   version: "1.0"
 
-accounts:
-  message: "Welcome to EazyBank accounts related local APIs "
+loans:
+  message: "Welcome to EazyBank loan related local APIs "
   contactDetails:
     name: "Katherine Aguirre - Product Owner"
     email: "kathesama@gmail.com"

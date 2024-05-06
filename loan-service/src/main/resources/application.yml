@@ -24,9 +24,18 @@ spring:
     import:
       - "application_qa.yml"
       - "application_prod.yml"
-  profiles:
-    active:
-      - "dev"
+
+build:
+  version: "3.0"
+
+loans:
+  message: "Welcome to EazyBank loan related local APIs "
+  contactDetails:
+    name: "Katherine Aguirre - Developer"
+    email: "kathesama@gmail.com"
+  onCallSupport:
+    - (000) 555-1234
+    - (000) 555-5678
 
 #For PostgreSQL
 #  datasource:
