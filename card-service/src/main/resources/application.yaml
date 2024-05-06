@@ -1,5 +1,5 @@
 server:
-  port: 8001
+  port: 18001
 
 spring:
   application:
@@ -20,6 +20,27 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  config:
+    activate:
+      on-profile: "dev-card"
+    import:
+      - "application_qa.yaml"
+      - "application_prod.yaml"
+  profiles:
+    active:
+      - "dev-card"
+
+build:
+  version: "3.0"
+
+cards:
+  message: "Welcome to EazyBank card related local APIs "
+  contactDetails:
+    name: "Katherine Aguirre - Developer"
+    email: "kathesama@gmail.com"
+  onCallSupport:
+    - (000) 555-1234
+    - (000) 555-5678
 
 #For PostgreSQL
 #  datasource:
