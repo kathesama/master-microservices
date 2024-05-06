@@ -31,6 +31,7 @@
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <spring-doc-openapi.version>2.5.0</spring-doc-openapi.version>
+        <jib-maven-plugin.version>3.4.1</jib-maven-plugin.version>
     </properties>
 
     <dependencies>
