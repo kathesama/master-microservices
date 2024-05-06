@@ -7,6 +7,7 @@ import com.kathesama.app.master.microservices.service.account.infrastructure.ada
 import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.dto.model.response.CustomerResponse;
 import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.mapper.AccountRestMapper;
 import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.mapper.CustomerRestMapper;
+import com.kathesama.app.master.microservices.service.account.infrastructure.configuration.AccountsContactInfo;
 import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ErrorResponseDto;
 import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ResponseBasicModel;
 import com.kathesama.app.master.microservices.service.common.util.common.SuccessCatalog;
@@ -22,11 +23,16 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Katherine Aguirre
@@ -46,9 +52,25 @@ public class AccountsController {
     private final CustomerRestMapper customerMapper;
     private final AccountRestMapper accountMapper;
 
-    @GetMapping("/api/v1/test")
-    public String helloWorld() {
-        return "Responding from Accounts microservice...";
+    @Value("${build.version}")
+    private String buildVersion;
+
+    private final Environment environment;
+
+    private final AccountsContactInfo accountsContactInfo;
+
+
+    @GetMapping("/api/v1/info")
+    public ResponseEntity<Object> getInfo() {
+        Map<String, Object> body = new HashMap<>();
+        body.put("Message", "Responding from Accounts microservice.");
+        body.put("Build version", buildVersion);
+        body.put("Java version", environment.getProperty("java.version"));
+        body.put("Contact info ", accountsContactInfo);
+
+        return ResponseEntity
+                .status(HttpStatus.I_AM_A_TEAPOT)
+                .body(body);
     }
 
     @Operation(
