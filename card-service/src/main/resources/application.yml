@@ -14,8 +14,7 @@ spring:
   profiles:
     active: "dev"
   config:
-    import: optional:configserver:http://localhost:8071
-
+    import: optional:configserver:http://localhost:8888
   # For MYSQL
   datasource:
     url: ${SPRING_DATASOURCE_URL}
@@ -28,29 +27,36 @@ spring:
     hibernate:
       ddl-auto: update
 
-#  # datasource For H2 DB
-#  datasource:
-#    url: jdbc:h2:mem:testdb
-#    driverClassName: org.h2.Driver
-#    username: sa
-#    password: ''
-#  h2:
-#    console:
-#      enabled: true
-#  jpa:
-#    database-platform: org.hibernate.dialect.H2Dialect
-#    hibernate:
-#      ddl-auto: update
-#    show-sql: true
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka
 
-#For PostgreSQL
-#  datasource:
-#    url: ${DB_HOST}
-#    username: ${DB_USER}
-#    password: ${DB_PASSWORD}
-#    driver-class-name: org.postgresql.Driver
-#  jpa:
-#    show-sql: true
-#    hibernate:
-#      ddl-auto: create
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      probes:
+        enabled: true
+  info:
+    env:
+      enabled: true
 
+endpoints:
+  shutdown:
+    enabled: true

@@ -1,5 +1,5 @@
 # Lista de todos los microservicios
-$services = "account-service", "loan-service", "card-service", "infrastructure/config-server"
+$services = "account-service", "loan-service", "card-service", "infrastructure/config-server", "eureka-server"
 
 # Itera sobre cada servicio
 foreach ($service in $services)

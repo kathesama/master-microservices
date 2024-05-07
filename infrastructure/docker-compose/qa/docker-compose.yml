@@ -34,16 +34,38 @@ services:
     image: "kathesama/config-server:v1"
     container_name: configserver-ms
     ports:
-      - "8071:8071"
+      - "8888:8888"
     healthcheck:
-      test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
+      test: "curl --fail --silent localhost:8888/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
       retries: 10
       start_period: 10s
+    networks:
+      - kathesamanet
     extends:
       file: common-config.yml
       service: microservice-base-config
+
+  eurekaserver:
+    image: "kathesama/eureka-server:v1"
+    container_name: eurekaserver-ms
+    ports:
+      - "8761:8761"
+    depends_on:
+      configserver:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8761/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - kathesamanet
+    extends:
+      file: common-config.yml
+      service: microservice-config-server-config
 
   accounts:
     image: "kathesama/account-service:v1"
@@ -53,7 +75,7 @@ services:
     depends_on:
       accountsdb:
         condition: service_healthy
-      configserver:
+      eurekaserver:
         condition: service_healthy
     deploy:
       resources:
@@ -66,7 +88,7 @@ services:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL_ACCOUNT}
     extends:
       file: common-config.yml
-      service: microservice-config-server-config
+      service: microservice-eureka-config
 
   cards:
     image: "kathesama/card-service:v1"
@@ -76,7 +98,7 @@ services:
     depends_on:
       cardsdb:
         condition: service_healthy
-      configserver:
+      eurekaserver:
         condition: service_healthy
     deploy:
       resources:
@@ -89,7 +111,7 @@ services:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL_CARD}
     extends:
       file: common-config.yml
-      service: microservice-config-server-config
+      service: microservice-eureka-config
 
   loans:
     image: "kathesama/loan-service:v1"
@@ -99,7 +121,7 @@ services:
     depends_on:
       loansdb:
         condition: service_healthy
-      configserver:
+      eurekaserver:
         condition: service_healthy
     deploy:
       resources:
@@ -112,7 +134,7 @@ services:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL_LOAN}
     extends:
       file: common-config.yml
-      service: microservice-config-server-config
+      service: microservice-eureka-config
 
 networks:
   kathesamanet:

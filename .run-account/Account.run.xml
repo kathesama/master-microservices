@@ -1,0 +1,36 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Account" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <envs>
+      <env name="SPRING_DATASOURCE_PASSWORD" value="root" />
+      <env name="SPRING_DATASOURCE_URL" value="jdbc:mysql://localhost:3306/accountsdb" />
+      <env name="SPRING_DATASOURCE_USERNAME" value="root" />
+      <env name="SPRING_PROFILES_ACTIVE" value="default" />
+    </envs>
+    <module name="account-service" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.kathesama.app.master.microservices.service.account.AccountserviceApplication" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.kathesama.app.master.microservices.service.account.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <extension name="net.ashald.envfile">
+      <option name="IS_ENABLED" value="false" />
+      <option name="IS_SUBST" value="false" />
+      <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+      <option name="IS_IGNORE_MISSING_FILES" value="false" />
+      <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+      <ENTRIES>
+        <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+      </ENTRIES>
+    </extension>
+    <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+      <option name="credential" />
+      <option name="region" />
+      <option name="useCurrentConnection" value="false" />
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
