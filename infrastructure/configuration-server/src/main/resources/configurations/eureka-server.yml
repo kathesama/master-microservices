@@ -28,7 +28,8 @@ management:
     liveness-state:
       enabled: true
   endpoint:
+    gateway:
+      enabled: true
     health:
       probes:
         enabled: true
-

@@ -1,0 +1,72 @@
+server:
+  port: 8073
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+#        - id: account-service
+#          uri: lb://account-service
+#          order: 8000
+#          predicates:
+#            - Path=/products/api/v1/**
+#          filters:
+#            - ExampleCookie=Hello world, user, kathesama
+#        - id: loan-service
+#          uri: lb://loan-service
+#          order: 8000
+#          predicates:
+#            - Path=/products/api/v1/**
+#          filters:
+#            - ExampleCookie=Hello world, user, kathesama
+#        - id: card-service
+#          uri: lb://item-service
+#          order: 8001
+#          predicates:
+#            - Path=/items/api/**
+
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    gateway:
+      enabled: true
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: gateway-server
+    version: v1
+
+logging:
+  level:
+    com:
+      kathesama:
+        app:
+          master:
+            microservices:
+              infrastructure:
+                server:
+                  gateway: DEBUG

@@ -6,30 +6,58 @@
         <groupId>com.kathesama.app</groupId>
         <artifactId>infrastructure</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- remove this line on microservice when is a service -->
     </parent>
 
-    <groupId>com.kathesama.app.master.microservices.infrastructure.server.gateway
-    </groupId> <!-- remove this line on microservice when is a service -->
-    <!-- remove this line on microservice when is a service -->
     <artifactId>gateway-server</artifactId>
 
-    <packaging>jar</packaging> <!-- remove this line on microservice when is a service -->
-
-    <!-- remove those properties on microservice when is a service or if not needed-->
     <properties>
-        <java.version>21</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <mockito.version>4.3.1</mockito.version>
     </properties>
 
-    <!-- remove those dependencies on microservice when is a service or if not needed-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
+
+        <!--        ***************************************-->
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <scope>test</scope>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+            <version>${spring.cloud.starter.config.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+            <version>${gateway-server.version}</version>
+        </dependency>
+
     </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>${jib-maven-plugin.version}</version>
+                <configuration>
+                    <to>
+                        <image>kathesama/${project.artifactId}:v1</image>
+                    </to>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
