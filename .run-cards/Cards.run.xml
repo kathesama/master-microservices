@@ -2,12 +2,12 @@
   <configuration default="false" name="Cards" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <envs>
       <env name="SPRING_DATASOURCE_PASSWORD" value="root" />
-      <env name="SPRING_DATASOURCE_URL" value="jdbc:mysql://localhost:3306/cardsdb" />
+      <env name="SPRING_DATASOURCE_URL" value="jdbc:mysql://localhost:3308/cardsdb" />
       <env name="SPRING_DATASOURCE_USERNAME" value="root" />
       <env name="SPRING_PROFILES_ACTIVE" value="default" />
     </envs>
-    <module name="loan-service" />
-    <option name="SPRING_BOOT_MAIN_CLASS" value="com.kathesama.app.master.microservices.service.loan.LoanserviceApplication" />
+    <module name="card-service" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.kathesama.app.master.microservices.service.card.CardserviceApplication" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="com.kathesama.app.master.microservices.service.account.*" />

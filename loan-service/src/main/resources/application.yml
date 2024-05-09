@@ -1,6 +1,11 @@
 server:
   port: 8002
 
+info:
+  app:
+    name: loan-service
+    version: v1
+
 logging:
   level:
     org.hibernate.SQL: debug
@@ -14,7 +19,7 @@ spring:
   profiles:
     active: "dev"
   config:
-    import: optional:configserver:http://localhost:8071
+    import: optional:configserver:http://localhost:8888
 
   # For MYSQL
   datasource:

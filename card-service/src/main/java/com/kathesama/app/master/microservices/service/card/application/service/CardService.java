@@ -2,7 +2,7 @@ package com.kathesama.app.master.microservices.service.card.application.service;
 
 import com.kathesama.app.master.microservices.service.card.application.ports.input.CardServiceInputPort;
 import com.kathesama.app.master.microservices.service.card.application.ports.output.CardPersistenceOutputPort;
-import com.kathesama.app.master.microservices.service.card.domain.model.Card;
+import com.kathesama.app.master.microservices.service.common.domain.model.Card;
 import com.kathesama.app.master.microservices.service.card.infrastructure.adapter.output.persistence.entity.CardEntity;
 import com.kathesama.app.master.microservices.service.card.infrastructure.adapter.output.persistence.mapper.CardPersistenceMapper;
 import com.kathesama.app.master.microservices.service.common.domain.exception.CustomerAlreadyExistsException;

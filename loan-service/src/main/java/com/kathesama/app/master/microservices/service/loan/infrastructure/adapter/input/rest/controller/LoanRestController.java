@@ -1,12 +1,12 @@
 package com.kathesama.app.master.microservices.service.loan.infrastructure.adapter.input.rest.controller;
 
+import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.request.LoanRequestModel;
 import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ErrorResponseDto;
 import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ResponseBasicModel;
 import com.kathesama.app.master.microservices.service.common.util.common.SuccessCatalog;
 import com.kathesama.app.master.microservices.service.loan.application.ports.input.LoanServiceInputPort;
-import com.kathesama.app.master.microservices.service.loan.domain.model.Loan;
-import com.kathesama.app.master.microservices.service.loan.infrastructure.adapter.input.rest.dto.model.request.LoanRequestModel;
-import com.kathesama.app.master.microservices.service.loan.infrastructure.adapter.input.rest.dto.model.response.LoanResponseModel;
+import com.kathesama.app.master.microservices.service.common.domain.model.Loan;
+import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.LoanResponseModel;
 import com.kathesama.app.master.microservices.service.loan.infrastructure.adapter.input.rest.mapper.LoanRestMapper;
 import com.kathesama.app.master.microservices.service.loan.util.LoansContactInfo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Tag(
-        name = "CRUD REST APIs for Accounts in EazyBank",
+        name = "CRUD REST APIs for Loans in EazyBank",
         description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE loan details"
 )
 @Slf4j
@@ -66,7 +66,7 @@ public class LoanRestController {
     }
 
     @Operation(
-            summary = "Fetch Account Details REST API",
+            summary = "Fetch Loan Details REST API",
             description = "REST API to fetch Loan details based on a mobile number"
     )
     @ApiResponses({
@@ -84,7 +84,7 @@ public class LoanRestController {
     }
     )
     @GetMapping("/api/v1/{mobileNumber}")
-    public ResponseEntity<LoanResponseModel> fetchAccountDetails(@PathVariable
+    public ResponseEntity<LoanResponseModel> fetchLoanDetails(@PathVariable
                                                                 @Pattern(regexp="(^$|[0-9]{10})",
                                                                         message = "Mobile number must be 10 digits")
                                                                 String mobileNumber) {
@@ -113,7 +113,7 @@ public class LoanRestController {
     }
     )
     @PostMapping("/api/v1/{mobileNumber}")
-    public ResponseEntity<LoanResponseModel> createAccount(@PathVariable
+    public ResponseEntity<LoanResponseModel> createLoan(@PathVariable
                                                               @NotEmpty(message = "Customer mobile number must not be blank")
                                                               @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
                                                               String mobileNumber) {
@@ -128,7 +128,7 @@ public class LoanRestController {
 
     @Operation(
             summary = "Update Loan Details REST API",
-            description = "REST API to update Customer &  Account details based on a account number"
+            description = "REST API to update Customer &  Loan details based on a account number"
     )
     @ApiResponses({
             @ApiResponse(
@@ -149,7 +149,7 @@ public class LoanRestController {
     }
     )
     @PutMapping("/api/v1/{mobileNumber}")
-    public ResponseEntity<LoanResponseModel> updateAccountDetails(@PathVariable
+    public ResponseEntity<LoanResponseModel> updateLoanDetails(@PathVariable
                                                                     @NotEmpty(message = "Customer mobile number must not be blank")
                                                                     @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
                                                                     String mobileNumber,
@@ -186,7 +186,7 @@ public class LoanRestController {
     }
     )
     @DeleteMapping("/api/v1/{mobileNumber}")
-    public ResponseEntity<ResponseBasicModel> deleteAccountDetails(@PathVariable
+    public ResponseEntity<ResponseBasicModel> deleteLoanDetails(@PathVariable
                                                                        @NotEmpty(message = "Customer mobile number must not be blank")
                                                                        @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
                                                                        String mobileNumber) {

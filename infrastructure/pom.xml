@@ -13,8 +13,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>config-server</module>
         <module>eureka-server</module>
+        <module>configuration-server</module>
     </modules>
 
     <properties>

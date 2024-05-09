@@ -1,5 +1,5 @@
 # Lista de todos los microservicios
-$services = "account-service", "loan-service", "card-service", "infrastructure/config-server", "eureka-server"
+$services = "account-service", "loan-service", "card-service", "infrastructure/configuration-server", "eureka-server"
 
 # Itera sobre cada servicio
 foreach ($service in $services)
@@ -12,3 +12,5 @@ foreach ($service in $services)
     # Vuelve al directorio raíz
     Set-Location -Path ..
 }
+
+Set-Location -Path ..

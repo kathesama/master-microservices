@@ -1,6 +1,11 @@
 server:
   port: 8000
 
+info:
+  app:
+    name: account-service
+    version: v1
+
 logging:
   level:
     org.hibernate.SQL: debug
@@ -15,6 +20,7 @@ spring:
     active: "dev"
   config:
     import: optional:configserver:http://localhost:8888
+
 # For MYSQL
   datasource:
     url: ${SPRING_DATASOURCE_URL}

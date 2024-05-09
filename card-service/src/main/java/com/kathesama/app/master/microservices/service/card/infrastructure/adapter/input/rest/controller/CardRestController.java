@@ -2,9 +2,9 @@ package com.kathesama.app.master.microservices.service.card.infrastructure.adapt
 
 import com.kathesama.app.master.microservices.service.card.util.CardsContactInfo;
 import com.kathesama.app.master.microservices.service.card.application.ports.input.CardServiceInputPort;
-import com.kathesama.app.master.microservices.service.card.domain.model.Card;
-import com.kathesama.app.master.microservices.service.card.infrastructure.adapter.input.rest.dto.model.request.CardRequestModel;
-import com.kathesama.app.master.microservices.service.card.infrastructure.adapter.input.rest.dto.model.response.CardResponseModel;
+import com.kathesama.app.master.microservices.service.common.domain.model.Card;
+import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.request.CardRequestModel;
+import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.CardResponseModel;
 import com.kathesama.app.master.microservices.service.card.infrastructure.adapter.input.rest.mapper.CardRestMapper;
 import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ErrorResponseDto;
 import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ResponseBasicModel;
@@ -84,7 +84,7 @@ public class CardRestController {
     }
     )
     @GetMapping("/api/v1/{mobileNumber}")
-    public ResponseEntity<CardResponseModel> fetchAccountDetails(@PathVariable
+    public ResponseEntity<CardResponseModel> fetchCardDetails(@PathVariable
                                                                 @Pattern(regexp="(^$|[0-9]{10})",
                                                                         message = "Mobile number must be 10 digits")
                                                                 String mobileNumber) {
@@ -113,7 +113,7 @@ public class CardRestController {
     }
     )
     @PostMapping("/api/v1/{mobileNumber}")
-    public ResponseEntity<CardResponseModel> createAccount(@PathVariable
+    public ResponseEntity<CardResponseModel> createCard(@PathVariable
                                                               @NotEmpty(message = "Customer mobile number must not be blank")
                                                               @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
                                                               String mobileNumber) {
@@ -149,7 +149,7 @@ public class CardRestController {
     }
     )
     @PutMapping("/api/v1/{mobileNumber}")
-    public ResponseEntity<CardResponseModel> updateAccountDetails(@PathVariable
+    public ResponseEntity<CardResponseModel> updateCardDetails(@PathVariable
                                                                     @NotEmpty(message = "Customer mobile number must not be blank")
                                                                     @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
                                                                     String mobileNumber,
@@ -186,7 +186,7 @@ public class CardRestController {
     }
     )
     @DeleteMapping("/api/v1/{mobileNumber}")
-    public ResponseEntity<ResponseBasicModel> deleteAccountDetails(@PathVariable
+    public ResponseEntity<ResponseBasicModel> deleteCardDetails(@PathVariable
                                                                        @NotEmpty(message = "Customer mobile number must not be blank")
                                                                        @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
                                                                        String mobileNumber) {

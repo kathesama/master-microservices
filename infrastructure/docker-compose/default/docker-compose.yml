@@ -31,7 +31,7 @@ services:
       service: microservice-db-config
 
   configserver:
-    image: "kathesama/config-server:v1"
+    image: "kathesama/configuration-server:v1"
     container_name: configserver-ms
     ports:
       - "8888:8888"

@@ -5,7 +5,7 @@ import com.kathesama.app.master.microservices.service.common.domain.exception.Re
 import com.kathesama.app.master.microservices.service.common.util.common.SuccessCatalog;
 import com.kathesama.app.master.microservices.service.loan.application.ports.input.LoanServiceInputPort;
 import com.kathesama.app.master.microservices.service.loan.application.ports.output.LoanPersistenceOutputPort;
-import com.kathesama.app.master.microservices.service.loan.domain.model.Loan;
+import com.kathesama.app.master.microservices.service.common.domain.model.Loan;
 import com.kathesama.app.master.microservices.service.loan.infrastructure.adapter.output.persistence.entity.LoanEntity;
 import com.kathesama.app.master.microservices.service.loan.infrastructure.adapter.output.persistence.mapper.LoanPersistenceMapper;
 import lombok.RequiredArgsConstructor;

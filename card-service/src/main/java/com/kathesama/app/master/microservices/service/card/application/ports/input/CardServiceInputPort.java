@@ -1,6 +1,6 @@
 package com.kathesama.app.master.microservices.service.card.application.ports.input;
 
-import com.kathesama.app.master.microservices.service.card.domain.model.Card;
+import com.kathesama.app.master.microservices.service.common.domain.model.Card;
 
 public interface CardServiceInputPort {
     /**

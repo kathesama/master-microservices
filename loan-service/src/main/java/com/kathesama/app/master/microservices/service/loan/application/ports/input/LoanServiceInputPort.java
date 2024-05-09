@@ -1,6 +1,7 @@
 package com.kathesama.app.master.microservices.service.loan.application.ports.input;
 
-import com.kathesama.app.master.microservices.service.loan.domain.model.Loan;
+
+import com.kathesama.app.master.microservices.service.common.domain.model.Loan;
 
 public interface LoanServiceInputPort {
     /**

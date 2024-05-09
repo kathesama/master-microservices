@@ -1,6 +1,6 @@
 package com.kathesama.app.master.microservices.service.loan.infrastructure.adapter.output.persistence.mapper;
 
-import com.kathesama.app.master.microservices.service.loan.domain.model.Loan;
+import com.kathesama.app.master.microservices.service.common.domain.model.Loan;
 import com.kathesama.app.master.microservices.service.loan.infrastructure.adapter.output.persistence.entity.LoanEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

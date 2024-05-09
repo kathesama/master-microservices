@@ -1,8 +1,9 @@
 package com.kathesama.app.master.microservices.service.account.domain.model;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+@SuperBuilder
 @Getter
 @Setter
 @NoArgsConstructor
