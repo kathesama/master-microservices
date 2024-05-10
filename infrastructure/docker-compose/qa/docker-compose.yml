@@ -67,6 +67,26 @@ services:
       file: common-config.yml
       service: microservice-config-server-config
 
+  gatewayserver:
+    image: "kathesama/gateway-server:v1"
+    container_name: gatewayserver-ms
+    ports:
+      - "8072:8072"
+    depends_on:
+      eurekaserver:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8072/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - kathesamanet
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+
   accounts:
     image: "kathesama/account-service:v1"
     container_name: accounts-ms
@@ -75,7 +95,7 @@ services:
     depends_on:
       accountsdb:
         condition: service_healthy
-      eurekaserver:
+      gatewayserver:
         condition: service_healthy
     deploy:
       resources:
@@ -98,7 +118,7 @@ services:
     depends_on:
       cardsdb:
         condition: service_healthy
-      eurekaserver:
+      gatewayserver:
         condition: service_healthy
     deploy:
       resources:
@@ -121,7 +141,7 @@ services:
     depends_on:
       loansdb:
         condition: service_healthy
-      eurekaserver:
+      gatewayserver:
         condition: service_healthy
     deploy:
       resources:

@@ -9,6 +9,7 @@ info:
 logging:
   level:
     org.hibernate.SQL: debug
+    com.kathesama.app.master.microservices.service.account: DEBUG
 
 spring:
   application:
@@ -37,11 +38,14 @@ eureka:
   instance:
     hostname: localhost
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    preferIpAddress: true
   client:
     register-with-eureka: true
     fetch-registry: true
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:8761/eureka
+      defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE:${default_service_url}}
+
+default_service_url: http://${eureka.instance.hostname}:8761/eureka
 
 management:
   endpoints:

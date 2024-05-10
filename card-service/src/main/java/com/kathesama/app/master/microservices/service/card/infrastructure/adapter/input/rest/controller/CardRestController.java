@@ -8,6 +8,7 @@ import com.kathesama.app.master.microservices.service.common.infrastructure.adap
 import com.kathesama.app.master.microservices.service.card.infrastructure.adapter.input.rest.mapper.CardRestMapper;
 import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ErrorResponseDto;
 import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ResponseBasicModel;
+import com.kathesama.app.master.microservices.service.common.util.common.ConstantsCatalog;
 import com.kathesama.app.master.microservices.service.common.util.common.SuccessCatalog;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -84,10 +85,13 @@ public class CardRestController {
     }
     )
     @GetMapping("/api/v1/{mobileNumber}")
-    public ResponseEntity<CardResponseModel> fetchCardDetails(@PathVariable
+    public ResponseEntity<CardResponseModel> fetchCardDetails(@RequestHeader(ConstantsCatalog.SERVICE_HEADER_CORRELATION_ID) String correlationId,
+                                                              @PathVariable
                                                                 @Pattern(regexp="(^$|[0-9]{10})",
                                                                         message = "Mobile number must be 10 digits")
                                                                 String mobileNumber) {
+        log.debug("{} found on GET /cards/api/v1/{mobileNumber}: {} ", ConstantsCatalog.SERVICE_HEADER_CORRELATION_ID, correlationId);
+
         Card card = service.fetch(mobileNumber);
         return ResponseEntity.status(HttpStatus.OK).body(
                 mapper.toCardResponse(card)

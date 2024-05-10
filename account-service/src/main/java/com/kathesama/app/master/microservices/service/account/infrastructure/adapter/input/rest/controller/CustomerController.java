@@ -1,11 +1,10 @@
 package com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.controller;
 
 import com.kathesama.app.master.microservices.service.account.application.ports.input.AccountFetchServiceInputPort;
-import com.kathesama.app.master.microservices.service.account.application.ports.input.AccountServiceInputPort;
 import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.dto.model.response.CustomerDetailsResponse;
-import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.mapper.AccountRestMapper;
 import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.mapper.CustomerDetailsRestMapper;
 import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ErrorResponseDto;
+import com.kathesama.app.master.microservices.service.common.util.common.ConstantsCatalog;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -36,7 +35,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path= "/customers", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class CustomerController {
     private final AccountFetchServiceInputPort customerService;
-
     private final CustomerDetailsRestMapper customerMapper;
 
     @Operation(
@@ -58,13 +56,17 @@ public class CustomerController {
     }
     )
     @GetMapping("/api/v1/{mobileNumber}")
-    public ResponseEntity<CustomerDetailsResponse> fetchCustomerDetails(@PathVariable
-                                                                    @Pattern(regexp="(^$|[0-9]{10})",
-                                                                            message = "Mobile number must be 10 digits")
-                                                           String mobileNumber) {
+    public ResponseEntity<CustomerDetailsResponse> fetchCustomerDetails(
+            @RequestHeader(ConstantsCatalog.SERVICE_HEADER_CORRELATION_ID) String correlationId,
+            @PathVariable
+                @Pattern(regexp="(^$|[0-9]{10})",
+                        message = "Mobile number must be 10 digits")
+                String mobileNumber) {
+
+        log.debug("{} found on GET /customers/api/v1/{mobileNumber}: {} ", ConstantsCatalog.SERVICE_HEADER_CORRELATION_ID, correlationId);
         return ResponseEntity.status(HttpStatus.OK).body(
                 customerMapper.toCustomerDetailsResponse(
-                        customerService.fetchCustomerDetails(mobileNumber)
+                        customerService.fetchCustomerDetails(mobileNumber, correlationId)
                 )
         );
     }

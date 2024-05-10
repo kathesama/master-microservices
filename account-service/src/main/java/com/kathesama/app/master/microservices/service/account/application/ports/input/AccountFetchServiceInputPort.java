@@ -8,5 +8,5 @@ public interface AccountFetchServiceInputPort {
      * @param mobileNumber - Input Mobile Number
      * @return Customer Details based on a given mobileNumber
      */
-    CustomerDetails fetchCustomerDetails(String mobileNumber);
+    CustomerDetails fetchCustomerDetails(String mobileNumber, String correlationId);
 }

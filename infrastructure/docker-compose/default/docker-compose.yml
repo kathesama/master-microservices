@@ -104,7 +104,7 @@ services:
     networks:
       - kathesamanet
     environment:
-      SPRING_APPLICATION_NAME: "account-service"
+#      SPRING_APPLICATION_NAME: "account-service"
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL_ACCOUNT}
     extends:
       file: common-config.yml
@@ -127,7 +127,7 @@ services:
     networks:
       - kathesamanet
     environment:
-      SPRING_APPLICATION_NAME: "card-service"
+#      SPRING_APPLICATION_NAME: "card-service"
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL_CARD}
     extends:
       file: common-config.yml
@@ -150,7 +150,7 @@ services:
     networks:
       - kathesamanet
     environment:
-      SPRING_APPLICATION_NAME: "loan-service"
+#      SPRING_APPLICATION_NAME: "loan-service"
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL_LOAN}
     extends:
       file: common-config.yml

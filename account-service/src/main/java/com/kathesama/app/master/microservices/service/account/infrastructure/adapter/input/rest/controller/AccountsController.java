@@ -70,7 +70,7 @@ public class AccountsController {
         body.put("Contact info ", accountsContactInfo);
 
         return ResponseEntity
-                .status(HttpStatus.I_AM_A_TEAPOT)
+                .status(HttpStatus.OK)
                 .body(body);
     }
 

@@ -3,6 +3,7 @@ package com.kathesama.app.master.microservices.service.loan.infrastructure.adapt
 import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.request.LoanRequestModel;
 import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ErrorResponseDto;
 import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ResponseBasicModel;
+import com.kathesama.app.master.microservices.service.common.util.common.ConstantsCatalog;
 import com.kathesama.app.master.microservices.service.common.util.common.SuccessCatalog;
 import com.kathesama.app.master.microservices.service.loan.application.ports.input.LoanServiceInputPort;
 import com.kathesama.app.master.microservices.service.common.domain.model.Loan;
@@ -84,10 +85,13 @@ public class LoanRestController {
     }
     )
     @GetMapping("/api/v1/{mobileNumber}")
-    public ResponseEntity<LoanResponseModel> fetchLoanDetails(@PathVariable
+    public ResponseEntity<LoanResponseModel> fetchLoanDetails(@RequestHeader(ConstantsCatalog.SERVICE_HEADER_CORRELATION_ID) String correlationId,
+                                                              @PathVariable
                                                                 @Pattern(regexp="(^$|[0-9]{10})",
                                                                         message = "Mobile number must be 10 digits")
                                                                 String mobileNumber) {
+        log.debug("{} found on GET /loans/api/v1/{mobileNumber}: {} ", ConstantsCatalog.SERVICE_HEADER_CORRELATION_ID, correlationId);
+
         Loan card = service.fetch(mobileNumber);
         return ResponseEntity.status(HttpStatus.OK).body(
                 mapper.toLoanResponse(card)

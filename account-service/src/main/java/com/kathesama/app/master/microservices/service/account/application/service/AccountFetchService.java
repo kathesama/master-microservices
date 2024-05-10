@@ -37,7 +37,7 @@ public class AccountFetchService implements AccountFetchServiceInputPort {
      * @return Customer Details based on a given mobileNumber
      */
     @Override
-    public CustomerDetails fetchCustomerDetails(String mobileNumber) {
+    public CustomerDetails fetchCustomerDetails(String mobileNumber, String correlationId) {
         CustomerEntity customer = customerPersistencePort.findByMobileNumber(mobileNumber).orElseThrow(() ->
                 new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber));
 
@@ -49,8 +49,8 @@ public class AccountFetchService implements AccountFetchServiceInputPort {
                 throw new ResourceNotFoundException("Account", "customerId", customer.getCustomerId().toString());
             });
 
-        customerDetails.setLoan(loanMapper.toLoan(loansFeignRestClient.fetchCardDetails(mobileNumber).getBody()));
-        customerDetails.setCard(cardMapper.toCard(cardsFeignRestClient.fetchCardDetails(mobileNumber).getBody()));
+        customerDetails.setLoan(loanMapper.toLoan(loansFeignRestClient.fetchCardDetails(correlationId, mobileNumber).getBody()));
+        customerDetails.setCard(cardMapper.toCard(cardsFeignRestClient.fetchCardDetails(correlationId, mobileNumber).getBody()));
 
         return customerDetails;
     }

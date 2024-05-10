@@ -1,42 +1,47 @@
 server:
-  port: 8073
+  port: 8072
 
 spring:
+  datasource:
+    autoconfigure: exclude
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
   cloud:
     gateway:
       discovery:
         locator:
-          enabled: true
-      routes:
+          enabled: false
+#          lower-case-service-id: true
+#      routes:
 #        - id: account-service
 #          uri: lb://account-service
 #          order: 8000
 #          predicates:
-#            - Path=/products/api/v1/**
-#          filters:
-#            - ExampleCookie=Hello world, user, kathesama
-#        - id: loan-service
-#          uri: lb://loan-service
-#          order: 8000
-#          predicates:
-#            - Path=/products/api/v1/**
-#          filters:
-#            - ExampleCookie=Hello world, user, kathesama
+#            - Path=/accounts/api/v1/**
+#            - Path=/customers/api/v1/**
 #        - id: card-service
-#          uri: lb://item-service
+#          uri: lb://card-service
 #          order: 8001
 #          predicates:
-#            - Path=/items/api/**
+#            - Path=/cards/api/v1/**
+#        - id: loan-service
+#          uri: lb://loan-service
+#          order: 8002
+#          predicates:
+#            - Path=/loans/api/v1/**
 
 eureka:
   instance:
     hostname: localhost
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    preferIpAddress: true
   client:
-    register-with-eureka: true
     fetch-registry: true
+    register-with-eureka: true
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:8761/eureka
+      defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE:${default_service_url}}
+
+default_service_url: http://${eureka.instance.hostname}:8761/eureka
 
 management:
   endpoints:
@@ -51,6 +56,9 @@ management:
   endpoint:
     gateway:
       enabled: true
+    health:
+      probes:
+        enabled: true
   info:
     env:
       enabled: true
@@ -62,11 +70,4 @@ info:
 
 logging:
   level:
-    com:
-      kathesama:
-        app:
-          master:
-            microservices:
-              infrastructure:
-                server:
-                  gateway: DEBUG
+    com.kathesama.app.master.microservices.infrastructure.server.gateway: DEBUG
