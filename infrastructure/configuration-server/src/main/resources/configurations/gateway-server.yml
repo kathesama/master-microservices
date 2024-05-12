@@ -71,3 +71,11 @@ info:
 logging:
   level:
     com.kathesama.app.master.microservices.infrastructure.server.gateway: DEBUG
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 2
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10000
