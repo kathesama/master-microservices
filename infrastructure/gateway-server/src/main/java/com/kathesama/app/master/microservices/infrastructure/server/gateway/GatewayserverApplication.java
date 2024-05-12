@@ -37,19 +37,20 @@ public class GatewayserverApplication {
 						.circuitBreaker(config -> config.setName("accountsCircuitBreaker").setFallbackUri("forward:/contactSupport"))
 				).uri("lb://account-service"))
 			.route(p -> p
-				.path("/services/cards/api/v1/**")
-				.filters(f -> f.rewritePath("/services/(?<segment>cards/api/v1(/.*)?)", "/${segment}")
-						.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
-						.circuitBreaker(config -> config.setName("cardsCircuitBreaker").setFallbackUri("forward:/contactSupport"))
-				)
-				.uri("lb://card-service"))
-			.route(p -> p
 				.path("/services/loans/api/v1/**")
 				.filters(f -> f.rewritePath("/services/(?<segment>loans/api/v1(/.*)?)", "/${segment}")
 						.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
-						.circuitBreaker(config -> config.setName("loansCircuitBreaker").setFallbackUri("forward:/contactSupport"))
+						.retry(retryConfig -> retryConfig.setRetries(3)
+								.setMethods(HttpMethod.GET)
+								.setBackoff(Duration.ofMillis(100),Duration.ofMillis(1000),2,true))
 				)
 				.uri("lb://loan-service"))
+			.route(p -> p
+				.path("/services/cards/api/v1/**")
+				.filters(f -> f.rewritePath("/services/(?<segment>cards/api/v1(/.*)?)", "/${segment}")
+						.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+				)
+				.uri("lb://card-service"))
 			.build();
 	}
 

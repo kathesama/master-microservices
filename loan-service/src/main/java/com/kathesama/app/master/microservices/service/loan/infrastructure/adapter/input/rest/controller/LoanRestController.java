@@ -55,6 +55,7 @@ public class LoanRestController {
 
     @GetMapping("/api/v1/info")
     public ResponseEntity<Object> getInfo() {
+        log.debug("Invoked Loans info API");
         Map<String, Object> body = new HashMap<>();
         body.put("Message", "Responding from loan microservice.");
         body.put("Build version", buildVersion);

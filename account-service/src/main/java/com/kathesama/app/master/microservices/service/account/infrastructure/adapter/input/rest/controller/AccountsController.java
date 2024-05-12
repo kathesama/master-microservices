@@ -12,6 +12,7 @@ import com.kathesama.app.master.microservices.service.account.util.AccountsConta
 import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ErrorResponseDto;
 import com.kathesama.app.master.microservices.service.common.infrastructure.adapter.input.rest.dto.model.response.ResponseBasicModel;
 import com.kathesama.app.master.microservices.service.common.util.common.SuccessCatalog;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -61,8 +62,10 @@ public class AccountsController {
     private final AccountsContactInfo accountsContactInfo;
 
 
+    @RateLimiter(name= "getJavaVersion", fallbackMethod = "getJavaVersionFallback")
     @GetMapping("/api/v1/info")
     public ResponseEntity<Object> getInfo() {
+        log.debug("Invoked Account info API");
         Map<String, Object> body = new HashMap<>();
         body.put("Message", "Responding from Accounts microservice.");
         body.put("Build version", buildVersion);
@@ -72,6 +75,13 @@ public class AccountsController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(body);
+    }
+
+    public ResponseEntity<String> getJavaVersionFallback(Throwable throwable) {
+        log.debug("Invoked Account fallback info API");
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("Java 17");
     }
 
     @Operation(

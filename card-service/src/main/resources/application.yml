@@ -20,10 +20,7 @@ spring:
     active: "dev"
   config:
     import: optional:configserver:http://localhost:8888
-  cloud:
-    openfeign:
-      circuitbreaker:
-        enabled: true
+
   # For MYSQL
   datasource:
     url: ${SPRING_DATASOURCE_URL}
@@ -72,11 +69,3 @@ management:
 endpoints:
   shutdown:
     enabled: true
-
-resilience4j.circuitbreaker:
-  configs:
-    default:
-      slidingWindowSize: 10
-      permittedNumberOfCallsInHalfOpenState: 2
-      failureRateThreshold: 50
-      waitDurationInOpenState: 10000

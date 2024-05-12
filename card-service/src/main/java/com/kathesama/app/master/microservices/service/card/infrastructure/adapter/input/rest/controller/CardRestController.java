@@ -55,6 +55,7 @@ public class CardRestController {
 
     @GetMapping("/api/v1/info")
     public ResponseEntity<Object> getInfo() {
+        log.debug("Invoked Cards info API");
         Map<String, Object> body = new HashMap<>();
         body.put("Message", "Responding from card microservice.");
         body.put("Build version", buildVersion);
