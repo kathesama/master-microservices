@@ -81,7 +81,7 @@ public class AccountsController {
         log.debug("Invoked Account fallback info API");
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body("Java 17");
+                .body("Java 17 from rate limiter triggered");
     }
 
     @Operation(

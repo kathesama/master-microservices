@@ -49,6 +49,8 @@ public class GatewayserverApplication {
 				.path("/services/cards/api/v1/**")
 				.filters(f -> f.rewritePath("/services/(?<segment>cards/api/v1(/.*)?)", "/${segment}")
 						.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+						.requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter())
+								.setKeyResolver(userKeyResolver()))
 				)
 				.uri("lb://card-service"))
 			.build();
@@ -61,14 +63,14 @@ public class GatewayserverApplication {
 				.timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(4)).build()).build());
 	}
 
-//	@Bean
-//	public RedisRateLimiter redisRateLimiter() {
-//		return new RedisRateLimiter(1, 1, 1);
-//	}
-//
-//	@Bean
-//	KeyResolver userKeyResolver() {
-//		return exchange -> Mono.justOrEmpty(exchange.getRequest().getHeaders().getFirst("user"))
-//				.defaultIfEmpty("anonymous");
-//	}
+	@Bean
+	public RedisRateLimiter redisRateLimiter() {
+		return new RedisRateLimiter(1, 1, 1);
+	}
+
+	@Bean
+	KeyResolver userKeyResolver() {
+		return exchange -> Mono.justOrEmpty(exchange.getRequest().getHeaders().getFirst("user"))
+				.defaultIfEmpty("anonymous");
+	}
 }
