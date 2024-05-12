@@ -30,8 +30,20 @@ services:
       file: common-config.yml
       service: microservice-db-config
 
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
+      timeout: 10s
+      retries: 10
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+
   configserver:
-    image: "kathesama/configuration-server:v1"
+    image: "kathesama/configuration-server:v2"
     container_name: configserver-ms
     ports:
       - "8888:8888"
@@ -48,7 +60,7 @@ services:
       service: microservice-base-config
 
   eurekaserver:
-    image: "kathesama/eureka-server:v1"
+    image: "kathesama/eureka-server:v2"
     container_name: eurekaserver-ms
     ports:
       - "8761:8761"
@@ -68,12 +80,14 @@ services:
       service: microservice-config-server-config
 
   gatewayserver:
-    image: "kathesama/gateway-server:v1"
+    image: "kathesama/gateway-server:v2"
     container_name: gatewayserver-ms
     ports:
       - "8072:8072"
     depends_on:
       eurekaserver:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8072/actuator/health/readiness | grep UP || exit 1"
@@ -83,12 +97,17 @@ services:
       start_period: 10s
     networks:
       - kathesamanet
+    environment:
+      SPRING_DATA_REDIS_CONNECT-TIMEOUT: 2s
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_DATA_REDIS_TIMEOUT: 1s
     extends:
       file: common-config.yml
       service: microservice-eureka-config
 
   accounts:
-    image: "kathesama/account-service:v1"
+    image: "kathesama/account-service:v2"
     container_name: accounts-ms
     ports:
       - "8000:8000"
@@ -104,14 +123,14 @@ services:
     networks:
       - kathesamanet
     environment:
-      SPRING_APPLICATION_NAME: "account-service"
+#      SPRING_APPLICATION_NAME: "account-service"
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL_ACCOUNT}
     extends:
       file: common-config.yml
       service: microservice-eureka-config
 
   cards:
-    image: "kathesama/card-service:v1"
+    image: "kathesama/card-service:v2"
     container_name: cards-ms
     ports:
       - "8001:8001"
@@ -127,14 +146,14 @@ services:
     networks:
       - kathesamanet
     environment:
-      SPRING_APPLICATION_NAME: "card-service"
+#      SPRING_APPLICATION_NAME: "card-service"
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL_CARD}
     extends:
       file: common-config.yml
       service: microservice-eureka-config
 
   loans:
-    image: "kathesama/loan-service:v1"
+    image: "kathesama/loan-service:v2"
     container_name: loans-ms
     ports:
       - "8002:8002"
@@ -150,7 +169,7 @@ services:
     networks:
       - kathesamanet
     environment:
-      SPRING_APPLICATION_NAME: "loan-service"
+#      SPRING_APPLICATION_NAME: "loan-service"
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL_LOAN}
     extends:
       file: common-config.yml

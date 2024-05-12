@@ -43,7 +43,7 @@ services:
       service: network-deploy-service
 
   configserver:
-    image: "kathesama/configuration-server:v1"
+    image: "kathesama/configuration-server:v2"
     container_name: configserver-ms
     ports:
       - "8888:8888"
@@ -60,7 +60,7 @@ services:
       service: microservice-base-config
 
   eurekaserver:
-    image: "kathesama/eureka-server:v1"
+    image: "kathesama/eureka-server:v2"
     container_name: eurekaserver-ms
     ports:
       - "8761:8761"
@@ -80,7 +80,7 @@ services:
       service: microservice-config-server-config
 
   gatewayserver:
-    image: "kathesama/gateway-server:v1"
+    image: "kathesama/gateway-server:v2"
     container_name: gatewayserver-ms
     ports:
       - "8072:8072"
@@ -107,7 +107,7 @@ services:
       service: microservice-eureka-config
 
   accounts:
-    image: "kathesama/account-service:v1"
+    image: "kathesama/account-service:v2"
     container_name: accounts-ms
     ports:
       - "8000:8000"
@@ -130,7 +130,7 @@ services:
       service: microservice-eureka-config
 
   cards:
-    image: "kathesama/card-service:v1"
+    image: "kathesama/card-service:v2"
     container_name: cards-ms
     ports:
       - "8001:8001"
@@ -153,7 +153,7 @@ services:
       service: microservice-eureka-config
 
   loans:
-    image: "kathesama/loan-service:v1"
+    image: "kathesama/loan-service:v2"
     container_name: loans-ms
     ports:
       - "8002:8002"

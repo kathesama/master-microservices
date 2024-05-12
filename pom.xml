@@ -37,6 +37,7 @@
         <eureka-server.version>4.1.1</eureka-server.version>
         <gateway-server.version>4.1.1</gateway-server.version>
         <spring.cloud.starter.config.version>4.1.1</spring.cloud.starter.config.version>
+        <jib-docker-image.version>v2</jib-docker-image.version>
     </properties>
 
     <dependencies>

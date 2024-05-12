@@ -107,7 +107,7 @@
                 <version>${jib-maven-plugin.version}</version>
                 <configuration>
                     <to>
-                        <image>kathesama/${project.artifactId}:v1</image>
+                        <image>kathesama/${project.artifactId}:${jib-docker-image.version}</image>
                     </to>
                 </configuration>
             </plugin>
