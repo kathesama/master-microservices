@@ -62,15 +62,20 @@ management:
   info:
     env:
       enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 info:
   app:
     name: gateway-server
-    version: v1
+    version: v3
 
 logging:
   level:
     com.kathesama.app.master.microservices.infrastructure.server.gateway: DEBUG
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
 
 resilience4j.circuitbreaker:
   configs:

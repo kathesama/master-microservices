@@ -14,8 +14,8 @@ eureka:
       default-zone: http://${eureka.instance.hostname}:${server.port}/eureka/
 
 logging:
-  level:
-    org.hibernate.SQL: debug
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
 
 management:
   endpoints:
@@ -33,3 +33,6 @@ management:
     health:
       probes:
         enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}

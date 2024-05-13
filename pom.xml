@@ -37,7 +37,7 @@
         <eureka-server.version>4.1.1</eureka-server.version>
         <gateway-server.version>4.1.1</gateway-server.version>
         <spring.cloud.starter.config.version>4.1.1</spring.cloud.starter.config.version>
-        <jib-docker-image.version>v2</jib-docker-image.version>
+        <jib-docker-image.version>v3</jib-docker-image.version>
     </properties>
 
     <dependencies>
@@ -45,6 +45,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
         <!--        ****************-->
     </dependencies>

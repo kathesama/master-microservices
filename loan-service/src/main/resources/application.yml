@@ -4,7 +4,7 @@ server:
 info:
   app:
     name: loan-service
-    version: v1
+    version: v2
 
 logging:
   level:

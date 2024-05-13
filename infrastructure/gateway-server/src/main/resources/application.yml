@@ -12,7 +12,7 @@ spring:
           lower-case-service-id: true
       httpclient:
         connect-timeout: 1000
-        response-timeout:
+        response-timeout: 10s
   data:
     redis:
       connect-timeout: ${SPRING_DATA_REDIS_CONNECT:2s}

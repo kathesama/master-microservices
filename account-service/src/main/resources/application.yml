@@ -4,12 +4,14 @@ server:
 info:
   app:
     name: account-service
-    version: v1
+    version: v3
 
 logging:
   level:
     org.hibernate.SQL: debug
     com.kathesama.app.master.microservices.service.account: DEBUG
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
 
 spring:
   application:
@@ -69,6 +71,9 @@ management:
   info:
     env:
       enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 endpoints:
   shutdown:
