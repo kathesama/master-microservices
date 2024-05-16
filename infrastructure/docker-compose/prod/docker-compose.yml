@@ -33,7 +33,7 @@ services:
         minio server /data
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
-      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
       MINIO_PROMETHEUS_AUTH_TYPE: public
       MINIO_UPDATE: off
     ports:
@@ -192,7 +192,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     command: run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
     ports:
-      - 12345:12345
+#      - 12345:12345
     depends_on:
       - gateway
     extends:
@@ -232,7 +232,7 @@ services:
   redis:
     image: redis
     ports:
-      - "6379:6379"
+#      - "6379:6379"
     healthcheck:
       test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
       timeout: 10s
@@ -245,8 +245,8 @@ services:
     image: "kathesama/configuration-server:v3"
     container_name: configserver-ms
     ports:
-      - "8888:8888"
-      - "7889:5005"
+#      - "8888:8888"
+#      - "7889:5005"
     healthcheck:
       test: "curl --fail --silent localhost:8888/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
@@ -284,7 +284,7 @@ services:
     container_name: gatewayserver-ms
     ports:
       - "8072:8072"
-      - "5005:5005"
+#      - "5005:5005"
     depends_on:
       eurekaserver:
         condition: service_healthy
@@ -316,8 +316,8 @@ services:
     image: "kathesama/account-service:v3"
     container_name: accounts-ms
     ports:
-      - "8000:8000"
-      - "7000:5005"
+#      - "8000:8000"
+#      - "7000:5005"
     depends_on:
       accountsdb:
         condition: service_healthy
@@ -339,8 +339,8 @@ services:
     image: "kathesama/card-service:v3"
     container_name: cards-ms
     ports:
-      - "8001:8001"
-      - "7001:5005"
+#      - "8001:8001"
+#      - "7001:5005"
     depends_on:
       cardsdb:
         condition: service_healthy
@@ -362,8 +362,8 @@ services:
     image: "kathesama/loan-service:v3"
     container_name: loans-ms
     ports:
-      - "8002:8002"
-      - "7002:5005"
+#      - "8002:8002"
+#      - "7002:5005"
     depends_on:
       loansdb:
         condition: service_healthy

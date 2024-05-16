@@ -33,5 +33,8 @@ build/
 .vscode/
 
 infrastructure/docker-compose/default/.env
+infrastructure/docker-compose/default/.data
 infrastructure/docker-compose/prod/.env
+infrastructure/docker-compose/prod/.data
 infrastructure/docker-compose/qa/.env
+infrastructure/docker-compose/qa/.data

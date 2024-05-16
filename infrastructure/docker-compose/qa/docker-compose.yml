@@ -33,7 +33,7 @@ services:
         minio server /data
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
-      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
       MINIO_PROMETHEUS_AUTH_TYPE: public
       MINIO_UPDATE: off
     ports:
@@ -316,7 +316,7 @@ services:
     image: "kathesama/account-service:v3"
     container_name: accounts-ms
     ports:
-      - "8000:8000"
+#      - "8000:8000"
       - "7000:5005"
     depends_on:
       accountsdb:
@@ -339,7 +339,7 @@ services:
     image: "kathesama/card-service:v3"
     container_name: cards-ms
     ports:
-      - "8001:8001"
+#      - "8001:8001"
       - "7001:5005"
     depends_on:
       cardsdb:
@@ -362,7 +362,7 @@ services:
     image: "kathesama/loan-service:v3"
     container_name: loans-ms
     ports:
-      - "8002:8002"
+#      - "8002:8002"
       - "7002:5005"
     depends_on:
       loansdb:
