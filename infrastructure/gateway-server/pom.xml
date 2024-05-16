@@ -54,6 +54,19 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
         </dependency>
+        <!--        Security        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-resource-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-jose</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -67,6 +80,14 @@
                     <to>
                         <image>kathesama/${project.artifactId}:${jib-docker-image.version}</image>
                     </to>
+                    <container>
+                        <jvmFlags>
+                            <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n</jvmFlag>
+                        </jvmFlags>
+                        <ports>
+                            <port>5005</port>
+                        </ports>
+                    </container>
                 </configuration>
             </plugin>
         </plugins>

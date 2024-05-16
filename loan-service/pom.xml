@@ -109,6 +109,14 @@
                     <to>
                         <image>kathesama/${project.artifactId}:${jib-docker-image.version}</image>
                     </to>
+                    <container>
+                        <jvmFlags>
+                            <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n</jvmFlag>
+                        </jvmFlags>
+                        <ports>
+                            <port>5005</port>
+                        </ports>
+                    </container>
                 </configuration>
             </plugin>
 

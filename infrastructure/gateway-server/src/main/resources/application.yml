@@ -13,6 +13,11 @@ spring:
       httpclient:
         connect-timeout: 1000
         response-timeout: 10s
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://${keycloak_realm_server}:${keycloak_realm_port}/realms/${keycloak_realm_default}/protocol/openid-connect/certs
   data:
     redis:
       connect-timeout: ${SPRING_DATA_REDIS_CONNECT:2s}
@@ -20,3 +25,6 @@ spring:
       port: ${SPRING_DATA_REDIS_PORT:6379}
       timeout: ${SPRING_DATA_REDIS_TIMEOUT:1s}
 
+keycloak_realm_port: ${KC_REALM_PORT:7080}
+keycloak_realm_default: ${KC_REALM_DEFAULT:master-microservices-realm-dev}
+keycloak_realm_server: ${KC_REALM_SERVER:localhost}
