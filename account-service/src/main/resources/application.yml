@@ -4,7 +4,7 @@ server:
 info:
   app:
     name: account-service
-    version: v3
+    version: v4
 
 logging:
   level:
@@ -27,6 +27,27 @@ spring:
     openfeign:
       circuitbreaker:
         enabled: true
+    function:
+      definition: updateCommunication
+    stream:
+      bindings:
+        updateCommunication-in-0:
+          destination: communication-sent
+          group: ${spring.application.name}
+        sendCommunication-out-0:
+          destination: send-communication
+  rabbitmq:
+    host: ${RBMQ_SERVICE_HOST:localhost}
+    port: ${RBMQ_SERVICE_PORT:5672}
+    username: ${RBMQ_SERVICE_USERNAME:guest}
+    password: ${RBMQ_SERVICE_PASSWORD:guest}
+    connection-timeout: ${RBMQ_SERVICE_CONNECTION_TIMEOUT:10s}
+  devtools:
+    livereload.enabled: true
+    restart.enabled: true
+    restart.poll-interval: 2s
+    restart.quiet-period: 1s
+
 # For MYSQL
   datasource:
     url: ${SPRING_DATASOURCE_URL}

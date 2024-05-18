@@ -16,6 +16,7 @@
         <module>eureka-server</module>
         <module>configuration-server</module>
         <module>gateway-server</module>
+        <module>message-server</module>
     </modules>
 
     <properties>

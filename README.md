@@ -237,3 +237,13 @@ For security purposes has been applied several patterns which are been listed be
 4. **Private net**: By not exposing the ports of the microservices on the Docker network and leaving only the port of the exposed gateway, you can make sure that all the traffic towards your microservices passes through the gateway, the microservices only They communicate with each other within the same Docker network and are not accessible directly from outside that network
 
 Likewise, **Keycloak** has been used for the management of authentication and validation via OAUTH2
+
+## Event Driver Design
+
+There are two approaches:
+1. **Publisher/Subscriber** (Pub/Sub) Model: RabbitMQ technology
+
+AMPQ protocol is implemented by RabbitMQ.
+
+2. **Event Streaming** Model: Apache Kafka
+

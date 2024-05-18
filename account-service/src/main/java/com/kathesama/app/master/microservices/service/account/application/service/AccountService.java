@@ -1,5 +1,6 @@
 package com.kathesama.app.master.microservices.service.account.application.service;
 
+import com.kathesama.app.master.microservices.service.account.infrastructure.adapter.input.rest.dto.model.response.AccountMessage;
 import com.kathesama.app.master.microservices.service.common.domain.exception.CustomerAlreadyExistsException;
 import com.kathesama.app.master.microservices.service.common.domain.exception.ResourceNotFoundException;
 import com.kathesama.app.master.microservices.service.account.application.ports.input.AccountServiceInputPort;
@@ -16,6 +17,7 @@ import com.kathesama.app.master.microservices.service.account.infrastructure.ada
 import com.kathesama.app.master.microservices.service.common.util.common.SuccessCatalog;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -32,6 +34,8 @@ public class AccountService implements AccountServiceInputPort {
     private final CustomerPersistenceOutputPort customerPersistencePort;
     private final CustomerPersistenceMapper customerMapper;
 
+    private final StreamBridge streamBridge;
+
     @Override
     public Customer createAccount(Customer customer) {
       Optional<CustomerEntity> optionalCustomer = customerPersistencePort.findByMobileNumber(customer.getMobileNumber());
@@ -41,12 +45,10 @@ public class AccountService implements AccountServiceInputPort {
                   + customer.getMobileNumber());
       }
 
-      CustomerEntity customerEntity = customerMapper.toCustomerEntity(customer);
+      CustomerEntity customerEntity = customerPersistencePort.save(customerMapper.toCustomerEntity(customer));
+      AccountEntity accountEntity = accountPersistencePort.save(createNewAccount(customerEntity));
 
-      customerEntity = customerPersistencePort.save(customerEntity);
-
-      accountPersistencePort.save(createNewAccount(customerEntity));
-
+      sendCommunication(accountMapper.toAccount(accountEntity), customerMapper.toCustomer(customerEntity));
       return customerMapper.toCustomer(customerEntity);
     }
 
@@ -106,5 +108,39 @@ public class AccountService implements AccountServiceInputPort {
         newAccount.setBranchAddress(SuccessCatalog.DEFAULT_ADDRESS.getCode());
 
         return newAccount;
+    }
+
+    private void sendCommunication(Account account, Customer customer) {
+        var accountsMsgDto = new AccountMessage(
+                account.getAccountNumber(),
+                customer.getName(),
+                customer.getEmail(),
+                customer.getMobileNumber()
+        );
+
+        log.info("Sending Communication request for the details: {}", accountsMsgDto);
+        var result = streamBridge.send("sendCommunication-out-0", accountsMsgDto);
+        log.info("Is the Communication request successfully triggered ? : {}", result);
+    }
+
+    /**
+     * @param accountNumber - Long
+     * @return boolean indicating if the update of communication status is successful or not
+     */
+    @Override
+    public boolean updateCommunicationStatus(Long accountNumber) {
+        if (accountNumber == null) {
+            return false;
+        }
+
+        AccountEntity accountEntity = accountPersistencePort
+                .findByCustomerId(accountNumber)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Account", "customerId", accountNumber.toString()));
+
+        accountEntity.setCommunicationSw(true);
+        accountPersistencePort.save(accountEntity);
+
+        return  true;
     }
 }

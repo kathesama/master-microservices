@@ -65,7 +65,7 @@ public class AccountsController {
     @RateLimiter(name= "getJavaVersion", fallbackMethod = "getJavaVersionFallback")
     @GetMapping("/api/v1/info")
     public ResponseEntity<Object> getInfo() {
-        log.debug("Invoked Account info API");
+        log.debug("Invoked Account info API: Hot reload");
         Map<String, Object> body = new HashMap<>();
         body.put("Message", "Responding from Accounts microservice.");
         body.put("Build version", buildVersion);

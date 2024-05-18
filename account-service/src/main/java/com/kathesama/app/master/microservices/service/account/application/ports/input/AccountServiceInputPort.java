@@ -30,4 +30,11 @@ public interface AccountServiceInputPort {
      * @param customerId - Input customerId
      */
     void deleteAccount(Long customerId);
+
+    /**
+     *
+     * @param accountNumber - Long
+     * @return boolean indicating if the update of communication status is successful or not
+     */
+    boolean updateCommunicationStatus(Long accountNumber);
 }

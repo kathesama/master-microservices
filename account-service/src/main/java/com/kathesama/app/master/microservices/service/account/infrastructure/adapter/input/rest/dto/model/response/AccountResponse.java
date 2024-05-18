@@ -20,4 +20,7 @@ public class AccountResponse {
 
     @JsonProperty("branchAddress")
     private String branchAddress;
+
+    @JsonProperty("communicationSw")
+    private Boolean communicationSw;
 }

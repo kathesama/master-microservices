@@ -25,6 +25,7 @@
     </modules>
 
     <properties>
+        <jib-docker-image.version>v4</jib-docker-image.version>
         <java.version>17</java.version>
         <spring-cloud.version>2023.0.1</spring-cloud.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
@@ -37,7 +38,9 @@
         <eureka-server.version>4.1.1</eureka-server.version>
         <gateway-server.version>4.1.1</gateway-server.version>
         <spring.cloud.starter.config.version>4.1.1</spring.cloud.starter.config.version>
-        <jib-docker-image.version>v3</jib-docker-image.version>
+        <spring-cloud-stream.version>4.1.1</spring-cloud-stream.version>
+        <spring-cloud-stream-binder-rabbit.version>4.1.1</spring-cloud-stream-binder-rabbit.version>
+        <spring-cloud-stream-test-binder.version>4.1.1</spring-cloud-stream-test-binder.version>
     </properties>
 
     <dependencies>

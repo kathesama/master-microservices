@@ -4,7 +4,8 @@ $services = "account-service",
             "card-service",
             "infrastructure/configuration-server",
             "eureka-server",
-            "gateway-server";
+            "gateway-server",
+            "message-server";
 
 # Itera sobre cada servicio
 foreach ($service in $services)

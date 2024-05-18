@@ -1,4 +1,20 @@
 services:
+  rabbit:
+    image: rabbitmq:3.13.2-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.4
     container_name: keycloak
@@ -192,7 +208,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     command: run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
     ports:
-#      - 12345:12345
+      - 12345:12345
     depends_on:
       - gateway
     extends:
@@ -232,7 +248,7 @@ services:
   redis:
     image: redis
     ports:
-#      - "6379:6379"
+      - "6379:6379"
     healthcheck:
       test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
       timeout: 10s
@@ -242,11 +258,11 @@ services:
       service: network-deploy-service
 
   configserver:
-    image: "kathesama/configuration-server:v3"
+    image: "kathesama/configuration-server:v4"
     container_name: configserver-ms
     ports:
-#      - "8888:8888"
-#      - "7889:5005"
+      - "8888:8888"
+      - "7889:5005"
     healthcheck:
       test: "curl --fail --silent localhost:8888/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
@@ -260,7 +276,7 @@ services:
       service: microservice-base-config
 
   eurekaserver:
-    image: "kathesama/eureka-server:v3"
+    image: "kathesama/eureka-server:v4"
     container_name: eurekaserver-ms
     ports:
       - "8761:8761"
@@ -280,17 +296,19 @@ services:
       service: microservice-config-server-config
 
   gatewayserver:
-    image: "kathesama/gateway-server:v3"
+    image: "kathesama/gateway-server:v4"
     container_name: gatewayserver-ms
     ports:
       - "8072:8072"
-#      - "5005:5005"
+      - "5005:5005"
     depends_on:
       eurekaserver:
         condition: service_healthy
       redis:
         condition: service_healthy
       keycloak:
+        condition: service_healthy
+      rabbit:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8072/actuator/health/readiness | grep UP || exit 1"
@@ -312,8 +330,26 @@ services:
       file: common-config.yml
       service: microservice-eureka-config
 
+  message:
+    image: "kathesama/message-server:v4"
+    container_name: message-ms
+    depends_on:
+      eurekaserver:
+        condition: service_healthy
+      rabbit:
+        condition: service_healthy
+    environment:
+      RBMQ_SERVICE_HOST: ${RBMQ_SERVICE_HOST_ENV}
+      RBMQ_SERVICE_PORT: ${RBMQ_SERVICE_PORT_ENV}
+      RBMQ_SERVICE_USERNAME: ${RBMQ_SERVICE_USERNAME_ENV}
+      RBMQ_SERVICE_PASSWORD: ${RBMQ_SERVICE_PASSWORD_ENV}
+      RBMQ_SERVICE_CONNECTION_TIMEOUT: ${RBMQ_SERVICE_CONNECTION_TIMEOUT_ENV}
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+
   accounts:
-    image: "kathesama/account-service:v3"
+    image: "kathesama/account-service:v4"
     container_name: accounts-ms
     ports:
 #      - "8000:8000"
@@ -331,12 +367,17 @@ services:
       - kathesamanet
     environment:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL_ACCOUNT}
+      RBMQ_SERVICE_HOST: ${RBMQ_SERVICE_HOST_ENV}
+      RBMQ_SERVICE_PORT: ${RBMQ_SERVICE_PORT_ENV}
+      RBMQ_SERVICE_USERNAME: ${RBMQ_SERVICE_USERNAME_ENV}
+      RBMQ_SERVICE_PASSWORD: ${RBMQ_SERVICE_PASSWORD_ENV}
+      RBMQ_SERVICE_CONNECTION_TIMEOUT: ${RBMQ_SERVICE_CONNECTION_TIMEOUT_ENV}
     extends:
       file: common-config.yml
       service: microservice-eureka-config
 
   cards:
-    image: "kathesama/card-service:v3"
+    image: "kathesama/card-service:v4"
     container_name: cards-ms
     ports:
 #      - "8001:8001"
@@ -359,7 +400,7 @@ services:
       service: microservice-eureka-config
 
   loans:
-    image: "kathesama/loan-service:v3"
+    image: "kathesama/loan-service:v4"
     container_name: loans-ms
     ports:
 #      - "8002:8002"
