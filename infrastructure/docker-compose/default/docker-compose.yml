@@ -27,13 +27,13 @@ services:
       KC_METRICS_ENABLED: "true"
       KEYCLOAK_IMPORT: "/tmp/realm-config.json"
     volumes:
-      - ../../configurations/keycloack/master-microservices-realm-dev.json:/tmp/realm-config.json
+      - ../../settings/keycloack/master-microservices-realm-dev.json:/tmp/realm-config.json
     command: "start-dev --import-realm"
     healthcheck:
       test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/8080 && echo -e 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200 OK'"]
       interval: 10s
-      timeout: 10s
-      retries: 5
+      timeout: 30s
+      retries: 10
     extends:
       file: common-config.yml
       service: network-deploy-service
@@ -313,7 +313,7 @@ services:
     healthcheck:
       test: "curl --fail --silent localhost:8072/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
-      timeout: 5s
+      timeout: 20s
       retries: 10
       start_period: 10s
     networks:
@@ -330,9 +330,9 @@ services:
       file: common-config.yml
       service: microservice-eureka-config
 
-  message:
-    image: "kathesama/message-server:v4"
-    container_name: message-ms
+  rabbitmqbroker:
+    image: "kathesama/rabbitmq-broker:v4"
+    container_name: rabbitmq-broker-ms
     depends_on:
       eurekaserver:
         condition: service_healthy
@@ -352,7 +352,7 @@ services:
     image: "kathesama/account-service:v4"
     container_name: accounts-ms
     ports:
-#      - "8000:8000"
+      - "8000:8000"
       - "7000:5005"
     depends_on:
       accountsdb:
@@ -383,7 +383,7 @@ services:
     image: "kathesama/card-service:v4"
     container_name: cards-ms
     ports:
-#      - "8001:8001"
+      - "8001:8001"
       - "7001:5005"
     depends_on:
       cardsdb:
@@ -409,7 +409,7 @@ services:
     image: "kathesama/loan-service:v4"
     container_name: loans-ms
     ports:
-#      - "8002:8002"
+      - "8002:8002"
       - "7002:5005"
     depends_on:
       loansdb:

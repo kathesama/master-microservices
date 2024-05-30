@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: message-server
+    name: rabbitmq-broker
   profiles:
     active: "dev"
   cloud:
@@ -44,7 +44,7 @@ logging:
 
 info:
   app:
-    name: message-service
+    name: rabbitmq-broker
     version: v4
 
 management:

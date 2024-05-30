@@ -27,7 +27,7 @@ services:
       KC_METRICS_ENABLED: "true"
       KEYCLOAK_IMPORT: "/tmp/realm-config.json"
     volumes:
-      - ../../configurations/keycloack/master-microservices-realm-dev.json:/tmp/realm-config.json
+      - ../../settings/keycloack/master-microservices-realm-dev.json:/tmp/realm-config.json
     command: "start-dev --import-realm"
     healthcheck:
       test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/8080 && echo -e 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200 OK'"]
@@ -330,9 +330,9 @@ services:
       file: common-config.yml
       service: microservice-eureka-config
 
-  message:
-    image: "kathesama/message-server:v4"
-    container_name: message-ms
+  rabbitmqbroker:
+    image: "kathesama/rabbitmq-broker:v4"
+    container_name: rabbitmq-broker-ms
     depends_on:
       eurekaserver:
         condition: service_healthy

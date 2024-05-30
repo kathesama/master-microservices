@@ -1,4 +1,4 @@
-package com.kathesama.app.master.microservices.service.infrastructure.server.message.domain.model;
+package com.kathesama.app.master.microservices.service.infrastructure.broker.rabbitmq.domain.model;
 
 /**
  * @param accountNumber

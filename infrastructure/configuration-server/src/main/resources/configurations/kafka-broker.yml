@@ -1,0 +1,75 @@
+server:
+  port: 9020
+
+spring:
+  application:
+    name: kafka-broker
+  profiles:
+    active: "dev"
+  cloud:
+    function:
+      definition: email|sms
+    stream:
+      bindings:
+        emailsms-in-0:
+          destination: send-communication
+          group: ${spring.application.name}
+        emailsms-out-0:
+          destination: communication-sent
+      kafka:
+        binder:
+          brokers:
+            - localhost:9092
+  rabbitmq:
+    host: ${RBMQ_SERVICE_HOST:localhost}
+    port: ${RBMQ_SERVICE_PORT:5672}
+    username: ${RBMQ_SERVICE_USERNAME:guest}
+    password: ${RBMQ_SERVICE_PASSWORD:guest}
+    connection-timeout: ${RBMQ_SERVICE_CONNECTION_TIMEOUT:10s}
+
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    preferIpAddress: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE:${default_service_url}}
+
+default_service_url: http://${eureka.instance.hostname}:8761/eureka
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
+  level:
+    com.kathesama.app.master.microservices.service.infrastructure.server.message: DEBUG
+
+info:
+  app:
+    name: rabbitmq-broker
+    version: v4
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      probes:
+        enabled: true
+  info:
+    env:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}

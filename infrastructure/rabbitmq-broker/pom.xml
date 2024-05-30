@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>message-server</artifactId>
+    <artifactId>rabbitmq-broker</artifactId>
 
     <properties>
         <mockito.version>4.3.1</mockito.version>

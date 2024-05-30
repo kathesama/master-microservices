@@ -1,6 +1,6 @@
-package com.kathesama.app.master.microservices.service.infrastructure.server.message.infrastructure.functions;
+package com.kathesama.app.master.microservices.service.infrastructure.broker.rabbitmq.infrastructure.functions;
 
-import com.kathesama.app.master.microservices.service.infrastructure.server.message.domain.model.AccountsMessages;
+import com.kathesama.app.master.microservices.service.infrastructure.broker.rabbitmq.domain.model.AccountsMessages;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

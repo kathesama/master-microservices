@@ -1,5 +1,5 @@
 spring:
   application:
-    name: message-server
+    name: rabbitmq-broker
   config:
     import: optional:configserver:http://localhost:8888
