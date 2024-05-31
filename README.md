@@ -14,6 +14,8 @@
 ![Prometheus](https://img.shields.io/badge/Prometheus-000000?style=for-the-badge&logo=prometheus&labelColor=000000)
 ![Netflix Eureka](https://img.shields.io/badge/Netflix%20Eureka-orange?style=for-the-badge&logo=netflix&labelColor=E50914)
 ![Keycloak](https://img.shields.io/badge/Keycloack-333?style=for-the-badge&logo=GNU%20Privacy%20Guard&logoColor=0093DD)
+![Kafka](https://img.shields.io/badge/Kafka-333?style=for-the-badge&logo=kafka&logoColor=0093DD)
+![RabbitMQ](https://img.shields.io/badge/RabbitMQ-333?style=for-the-badge&logo=kafka&logoColor=0093DD)
 <br>
 
 [![GitHub issues](https://img.shields.io/github/issues/kathesama/master-microservices?style=plastic)](https://github.com/kathesama/master-microservices/issues)
