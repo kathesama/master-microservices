@@ -1,6 +1,0 @@
-FROM bitnami/schema-registry:latest
-USER root
-RUN mkdir -p /var/lib/apt/lists/partial && \
-    apt-get update && \
-    apt-get install -y curl
-USER 1001

@@ -48,7 +48,7 @@ logging:
 
 info:
   app:
-    name: rabbitmq-broker
+    name: messages-broker
     version: v4
 
 management:

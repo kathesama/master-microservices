@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>rabbitmq-broker</artifactId>
+    <artifactId>messages-broker</artifactId>
 
     <properties>
         <mockito.version>4.3.1</mockito.version>
@@ -41,8 +41,8 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-stream-binder-rabbit</artifactId>
-            <version>${spring-cloud-stream-binder-rabbit.version}</version>
+            <artifactId>spring-cloud-stream-binder-kafka</artifactId>
+            <version>${spring-cloud-stream-binder-kafka.version}</version>
         </dependency>
         <!--        ******************************-->
         <dependency>

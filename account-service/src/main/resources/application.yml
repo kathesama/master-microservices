@@ -36,12 +36,15 @@ spring:
           group: ${spring.application.name}
         sendCommunication-out-0:
           destination: send-communication
-  rabbitmq:
-    host: ${RBMQ_SERVICE_HOST:localhost}
-    port: ${RBMQ_SERVICE_PORT:5672}
-    username: ${RBMQ_SERVICE_USERNAME:guest}
-    password: ${RBMQ_SERVICE_PASSWORD:guest}
-    connection-timeout: ${RBMQ_SERVICE_CONNECTION_TIMEOUT:10s}
+      kafka:
+        binder:
+          brokers: ${BROKER_SERVICE_HOST:${default_local_kafka_cluster}}
+#  rabbitmq:
+#    host: ${RBMQ_SERVICE_HOST:localhost}
+#    port: ${RBMQ_SERVICE_PORT:5672}
+#    username: ${RBMQ_SERVICE_USERNAME:guest}
+#    password: ${RBMQ_SERVICE_PASSWORD:guest}
+#    connection-timeout: ${RBMQ_SERVICE_CONNECTION_TIMEOUT:10s}
   devtools:
     livereload.enabled: true
     restart.enabled: true
@@ -72,6 +75,7 @@ eureka:
       defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE:${default_service_url}}
 
 default_service_url: http://${eureka.instance.hostname}:8761/eureka
+default_local_kafka_cluster: 'localhost:9092,localhost:9093,localhost:9095'
 
 management:
   endpoints:

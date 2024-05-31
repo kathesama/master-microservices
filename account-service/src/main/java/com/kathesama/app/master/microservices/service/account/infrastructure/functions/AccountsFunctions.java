@@ -17,5 +17,4 @@ public class AccountsFunctions {
             accountsService.updateCommunicationStatus(accountNumber);
         };
     }
-
 }

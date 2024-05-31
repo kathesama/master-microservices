@@ -1,19 +1,247 @@
 services:
-  rabbit:
-    image: rabbitmq:3.13.2-management
-    hostname: rabbitmq
+  kafka0:
+    image: confluentinc/cp-kafka:7.6.1
+    restart: on-failure:5
+    hostname: kafka0
+    container_name: kafka0
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "9092:9092"
+      - "9997:9997"
+    environment:
+      CLUSTER_ID: gTCA24KBTQGmpnFv6eLPzA
+      KAFKA_NODE_ID: 1
+      KAFKA_JMX_PORT: 9997
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka0:29093,2@kafka1:29093,3@kafka2:29093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
+      KAFKA_LISTENERS: 'PLAINTEXT://kafka0:29092,CONTROLLER://kafka0:29093,PLAINTEXT_HOST://0.0.0.0:9092'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka0:29092,PLAINTEXT_HOST://localhost:9092'
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka0 -Dcom.sun.management.jmxremote.rmi.port=9997
+      KAFKA_PROCESS_ROLES: 'broker,controller'
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+      KAFKA_COMPRESSION_TYPE: producer
     healthcheck:
-      test: rabbitmq-diagnostics check_port_connectivity
-      interval: 10s
-      timeout: 5s
+      test: nc -z localhost 9092 || exit -1
+      interval: 30s
+      timeout: 10s
       retries: 10
-      start_period: 5s
+      start_period: 60s
+    volumes:
+      - ./volumes/kafka/kafka0:/tmp/kraft-combined-logs
     extends:
       file: common-config.yml
       service: network-deploy-service
+
+  kafka1:
+    image: confluentinc/cp-kafka:7.6.1
+    restart: on-failure:5
+    hostname: kafka1
+    container_name: kafka1
+    ports:
+      - "9093:9093"
+      - "9998:9998"
+    environment:
+      CLUSTER_ID: gTCA24KBTQGmpnFv6eLPzA
+      KAFKA_NODE_ID: 2
+      KAFKA_JMX_PORT: 9998
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka0:29093,2@kafka1:29093,3@kafka2:29093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
+      KAFKA_LISTENERS: 'PLAINTEXT://kafka1:29092,CONTROLLER://kafka1:29093,PLAINTEXT_HOST://0.0.0.0:9093'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka1:29092,PLAINTEXT_HOST://localhost:9093'
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka1 -Dcom.sun.management.jmxremote.rmi.port=9998
+      KAFKA_PROCESS_ROLES: 'broker,controller'
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+      KAFKA_COMPRESSION_TYPE: producer
+    healthcheck:
+      test: nc -z localhost 9093 || exit -1
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+    volumes:
+      - ./volumes/kafka/kafka1:/tmp/kraft-combined-logs
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+
+  kafka2:
+    image: confluentinc/cp-kafka:7.6.1
+    restart: on-failure:5
+    hostname: kafka2
+    container_name: kafka2
+    ports:
+      - "9095:9095"
+      - "9999:9999"
+    environment:
+      CLUSTER_ID: gTCA24KBTQGmpnFv6eLPzA
+      KAFKA_NODE_ID: 3
+      KAFKA_JMX_PORT: 9998
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka0:29093,2@kafka1:29093,3@kafka2:29093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
+      KAFKA_LISTENERS: 'PLAINTEXT://kafka2:29092,CONTROLLER://kafka2:29093,PLAINTEXT_HOST://0.0.0.0:9095'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka2:29092,PLAINTEXT_HOST://localhost:9095'
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka2 -Dcom.sun.management.jmxremote.rmi.port=9999
+      KAFKA_PROCESS_ROLES: 'broker,controller'
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+      KAFKA_COMPRESSION_TYPE: producer
+    healthcheck:
+      test: nc -z localhost 9095 || exit -1
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+    volumes:
+      - ./volumes/kafka/kafka2:/tmp/kraft-combined-logs
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+
+  schemaregistry0:
+    image: confluentinc/cp-schema-registry:7.6.1
+    restart: on-failure:5
+    hostname: schemaregistry0
+    container_name: schemaregistry0
+    ports:
+      - 8085:8085
+    depends_on:
+      kafka0:
+        condition: service_healthy
+      kafka1:
+        condition: service_healthy
+      kafka2:
+        condition: service_healthy
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'PLAINTEXT://kafka0:29092,PLAINTEXT://kafka1:29092,PLAINTEXT://kafka2:29092'
+      SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL: PLAINTEXT
+      SCHEMA_REGISTRY_HOST_NAME: schemaregistry0
+      SCHEMA_REGISTRY_LISTENERS: http://schemaregistry0:8085
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://schemaregistry0:8085 || exit 1" ]
+      start_period: 60s
+      interval: 20s
+      timeout: 120s
+      retries: 20
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+
+  kafka-connect0:
+    image: confluentinc/cp-kafka-connect:7.6.1
+    restart: on-failure:5
+    ports:
+      - 8083:8083
+    depends_on:
+      kafka0:
+        condition: service_healthy
+      kafka1:
+        condition: service_healthy
+      kafka2:
+        condition: service_healthy
+      schemaregistry0:
+        condition: service_healthy
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: kafka0:29092,kafka1:29092,kafka2:29092
+      CONNECT_GROUP_ID: compose-connect-group
+      CONNECT_CONFIG_STORAGE_TOPIC: _connect_configs
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_OFFSET_STORAGE_TOPIC: _connect_offset
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_STATUS_STORAGE_TOPIC: _connect_status
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
+      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: http://schemaregistry0:8085
+      CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.storage.StringConverter
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schemaregistry0:8085
+      CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_REST_ADVERTISED_HOST_NAME: kafka-connect0
+      CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:8083/ || exit 1" ]
+      start_period: 60s
+      interval: 20s
+      timeout: 120s
+      retries: 20
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+
+#  kafka-init-topics:
+#    image: confluentinc/cp-kafka:7.6.1
+#    volumes:
+#      - ./data/message.json:/data/message.json
+#    depends_on:
+#      kafka1:
+#        condition: service_healthy
+#    command: "bash -c 'echo Waiting for Kafka to be ready... && \
+#               cub kafka-ready -b kafka1:29092 1 30 && \
+#               kafka-topics --create --topic second.users --partitions 3 --replication-factor 1 --if-not-exists --bootstrap-server kafka1:29092 && \
+#               kafka-topics --create --topic second.messages --partitions 2 --replication-factor 1 --if-not-exists --bootstrap-server kafka1:29092 && \
+#               kafka-topics --create --topic first.messages --partitions 2 --replication-factor 1 --if-not-exists --bootstrap-server kafka0:29092 && \
+#               kafka-console-producer --bootstrap-server kafka1:29092 -topic second.users < /data/message.json'"
+
+  kafka-ui:
+    container_name: kafka-ui
+    image: provectuslabs/kafka-ui:latest
+    restart: on-failure:5
+    ports:
+      - 8081:8081
+    depends_on:
+      kafka0:
+        condition: service_healthy
+      kafka1:
+        condition: service_healthy
+      kafka2:
+        condition: service_healthy
+      schemaregistry0:
+        condition: service_healthy
+      kafka-connect0:
+        condition: service_healthy
+    environment:
+      SERVER_PORT: 8081
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka0:29092,kafka1:29092,kafka2:29092
+      KAFKA_CLUSTERS_0_METRICS_PORT: 9997
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schemaregistry0:8085
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: first
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://kafka-connect0:8083
+      DYNAMIC_CONFIG_ENABLED: 'true'
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+
+#  rabbit:
+#    image: rabbitmq:3.13.2-management
+#    hostname: messages
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+#    healthcheck:
+#      test: messages-diagnostics check_port_connectivity
+#      interval: 10s
+#      timeout: 5s
+#      retries: 10
+#      start_period: 5s
+#    extends:
+#      file: common-config.yml
+#      service: network-deploy-service
 
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.4
@@ -78,9 +306,10 @@ services:
       - minio
     healthcheck:
       test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3100/ready || exit 1" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
     networks: &loki-dns
       kathesamanet:
         aliases:
@@ -97,9 +326,10 @@ services:
       - ../../observability/grafana-loki-warehouse/loki-config.yaml:/etc/loki/config.yaml
     healthcheck:
       test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3100/ready || exit 1" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
     depends_on:
       - minio
     networks:
@@ -260,6 +490,7 @@ services:
   configserver:
     image: "kathesama/configuration-server:v4"
     container_name: configserver-ms
+    restart: on-failure:5
     ports:
       - "8888:8888"
       - "7889:5005"
@@ -278,6 +509,7 @@ services:
   eurekaserver:
     image: "kathesama/eureka-server:v4"
     container_name: eurekaserver-ms
+    restart: on-failure:5
     ports:
       - "8761:8761"
     depends_on:
@@ -298,6 +530,7 @@ services:
   gatewayserver:
     image: "kathesama/gateway-server:v4"
     container_name: gatewayserver-ms
+    restart: on-failure:5
     ports:
       - "8072:8072"
       - "5005:5005"
@@ -308,14 +541,16 @@ services:
         condition: service_healthy
       keycloak:
         condition: service_healthy
-      rabbit:
+      kafka-connect0:
         condition: service_healthy
+#      rabbit:
+#        condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8072/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 20s
       retries: 10
-      start_period: 10s
+      start_period: 30s
     networks:
       - kathesamanet
     environment:
@@ -330,20 +565,24 @@ services:
       file: common-config.yml
       service: microservice-eureka-config
 
-  rabbitmqbroker:
-    image: "kathesama/rabbitmq-broker:v4"
-    container_name: rabbitmq-broker-ms
+  messagebroker:
+    image: "kathesama/messages-broker:v4"
+    container_name: messages-broker-ms
+    restart: on-failure:5
+    ports:
+      - "7005:5005"
     depends_on:
-      eurekaserver:
+      gatewayserver:
         condition: service_healthy
-      rabbit:
-        condition: service_healthy
+#      rabbit:
+#        condition: service_healthy
     environment:
-      RBMQ_SERVICE_HOST: ${RBMQ_SERVICE_HOST_ENV}
-      RBMQ_SERVICE_PORT: ${RBMQ_SERVICE_PORT_ENV}
-      RBMQ_SERVICE_USERNAME: ${RBMQ_SERVICE_USERNAME_ENV}
-      RBMQ_SERVICE_PASSWORD: ${RBMQ_SERVICE_PASSWORD_ENV}
-      RBMQ_SERVICE_CONNECTION_TIMEOUT: ${RBMQ_SERVICE_CONNECTION_TIMEOUT_ENV}
+      BROKER_SERVICE_HOST: ${BROKER_SERVICE_HOST_ENV}
+#      RBMQ_SERVICE_HOST: ${RBMQ_SERVICE_HOST_ENV}
+#      RBMQ_SERVICE_PORT: ${RBMQ_SERVICE_PORT_ENV}
+#      RBMQ_SERVICE_USERNAME: ${RBMQ_SERVICE_USERNAME_ENV}
+#      RBMQ_SERVICE_PASSWORD: ${RBMQ_SERVICE_PASSWORD_ENV}
+#      RBMQ_SERVICE_CONNECTION_TIMEOUT: ${RBMQ_SERVICE_CONNECTION_TIMEOUT_ENV}
     extends:
       file: common-config.yml
       service: microservice-eureka-config
@@ -351,6 +590,7 @@ services:
   accounts:
     image: "kathesama/account-service:v4"
     container_name: accounts-ms
+    restart: on-failure:5
     ports:
       - "8000:8000"
       - "7000:5005"
@@ -367,11 +607,12 @@ services:
       - kathesamanet
     environment:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL_ACCOUNT}
-      RBMQ_SERVICE_HOST: ${RBMQ_SERVICE_HOST_ENV}
-      RBMQ_SERVICE_PORT: ${RBMQ_SERVICE_PORT_ENV}
-      RBMQ_SERVICE_USERNAME: ${RBMQ_SERVICE_USERNAME_ENV}
-      RBMQ_SERVICE_PASSWORD: ${RBMQ_SERVICE_PASSWORD_ENV}
-      RBMQ_SERVICE_CONNECTION_TIMEOUT: ${RBMQ_SERVICE_CONNECTION_TIMEOUT_ENV}
+      BROKER_SERVICE_HOST: ${BROKER_SERVICE_HOST_ENV}
+#      RBMQ_SERVICE_HOST: ${RBMQ_SERVICE_HOST_ENV}
+#      RBMQ_SERVICE_PORT: ${RBMQ_SERVICE_PORT_ENV}
+#      RBMQ_SERVICE_USERNAME: ${RBMQ_SERVICE_USERNAME_ENV}
+#      RBMQ_SERVICE_PASSWORD: ${RBMQ_SERVICE_PASSWORD_ENV}
+#      RBMQ_SERVICE_CONNECTION_TIMEOUT: ${RBMQ_SERVICE_CONNECTION_TIMEOUT_ENV}
     volumes:
       - ../../../account-service/src/main/java:/app/classes
       - ../../../account-service/target/classes:/app/resources
@@ -382,6 +623,7 @@ services:
   cards:
     image: "kathesama/card-service:v4"
     container_name: cards-ms
+    restart: on-failure:5
     ports:
       - "8001:8001"
       - "7001:5005"
@@ -408,6 +650,7 @@ services:
   loans:
     image: "kathesama/loan-service:v4"
     container_name: loans-ms
+    restart: on-failure:5
     ports:
       - "8002:8002"
       - "7002:5005"
@@ -434,6 +677,7 @@ services:
   prometheus:
     image: prom/prometheus:v2.50.1
     container_name: prometheus
+    restart: on-failure:5
     ports:
       - "9090:9090"
     volumes:

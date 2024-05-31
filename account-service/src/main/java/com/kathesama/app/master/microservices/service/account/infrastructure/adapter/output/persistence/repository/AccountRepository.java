@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface AccountRepository extends JpaRepository<AccountEntity, Long> {
     Optional<AccountEntity> findByCustomerId(Long customerId);
+    Optional<AccountEntity> findByAccountNumber(Long accountNumber);
 
     @Transactional
     @Modifying

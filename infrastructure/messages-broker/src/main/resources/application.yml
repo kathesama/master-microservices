@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: messages-broker
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  config:
+    import: optional:configserver:http://localhost:8888
+  cloud:
+    function:
+      definition: email|sms
+    stream:
+      bindings:
+        emailsms-in-0:
+          destination: send-communication
+          group: ${spring.application.name}
+        emailsms-out-0:
+          destination: communication-sent
+      kafka:
+        binder:
+          brokers: ${BROKER_SERVICE_HOST:${default_local_kafka_cluster}}
+
+default_local_kafka_cluster: 'localhost:9092,localhost:9093,localhost:9095'

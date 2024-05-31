@@ -1,4 +1,4 @@
-package com.kathesama.app.master.microservices.service.infrastructure.broker.rabbitmq;
+package com.kathesama.app.master.microservices.service.infrastructure.broker.messages;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

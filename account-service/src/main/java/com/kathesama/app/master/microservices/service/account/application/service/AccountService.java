@@ -48,7 +48,7 @@ public class AccountService implements AccountServiceInputPort {
       CustomerEntity customerEntity = customerPersistencePort.save(customerMapper.toCustomerEntity(customer));
       AccountEntity accountEntity = accountPersistencePort.save(createNewAccount(customerEntity));
 
-      sendCommunication(accountMapper.toAccount(accountEntity), customerMapper.toCustomer(customerEntity));
+      this.sendCommunication(accountMapper.toAccount(accountEntity), customerMapper.toCustomer(customerEntity));
       return customerMapper.toCustomer(customerEntity);
     }
 
@@ -111,7 +111,7 @@ public class AccountService implements AccountServiceInputPort {
     }
 
     private void sendCommunication(Account account, Customer customer) {
-        var accountsMsgDto = new AccountMessage(
+        AccountMessage accountsMsgDto = new AccountMessage(
                 account.getAccountNumber(),
                 customer.getName(),
                 customer.getEmail(),
@@ -134,9 +134,9 @@ public class AccountService implements AccountServiceInputPort {
         }
 
         AccountEntity accountEntity = accountPersistencePort
-                .findByCustomerId(accountNumber)
+                .findByAccountNumber(accountNumber)
                 .orElseThrow(
-                        () -> new ResourceNotFoundException("Account", "customerId", accountNumber.toString()));
+                        () -> new ResourceNotFoundException("Account", "accountNumber", accountNumber.toString()));
 
         accountEntity.setCommunicationSw(true);
         accountPersistencePort.save(accountEntity);

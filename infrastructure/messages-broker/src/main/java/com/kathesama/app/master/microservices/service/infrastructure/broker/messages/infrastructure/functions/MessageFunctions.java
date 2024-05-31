@@ -1,6 +1,6 @@
-package com.kathesama.app.master.microservices.service.infrastructure.broker.rabbitmq.infrastructure.functions;
+package com.kathesama.app.master.microservices.service.infrastructure.broker.messages.infrastructure.functions;
 
-import com.kathesama.app.master.microservices.service.infrastructure.broker.rabbitmq.domain.model.AccountsMessages;
+import com.kathesama.app.master.microservices.service.infrastructure.broker.messages.domain.model.AccountsMessages;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ import java.util.function.Function;
 public class MessageFunctions {
 
     @Bean
-    public Function<AccountsMessages,AccountsMessages> email() {
+    public Function<AccountsMessages, AccountsMessages> email() {
         return accountsMsgDto -> {
             log.info("Sending email with the details : " +  accountsMsgDto.toString());
             return accountsMsgDto;

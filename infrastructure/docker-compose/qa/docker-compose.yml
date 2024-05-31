@@ -1,12 +1,12 @@
 services:
   rabbit:
     image: rabbitmq:3.13.2-management
-    hostname: rabbitmq
+    hostname: messages
     ports:
       - "5672:5672"
       - "15672:15672"
     healthcheck:
-      test: rabbitmq-diagnostics check_port_connectivity
+      test: messages-diagnostics check_port_connectivity
       interval: 10s
       timeout: 5s
       retries: 10
@@ -332,7 +332,7 @@ services:
 
   rabbitmqbroker:
     image: "kathesama/rabbitmq-broker:v4"
-    container_name: rabbitmq-broker-ms
+    container_name: messages-broker-ms
     depends_on:
       eurekaserver:
         condition: service_healthy

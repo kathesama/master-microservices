@@ -50,6 +50,14 @@ public class AccountPersistenceAdapter implements AccountPersistenceOutputPort, 
     }
 
     @Override
+    public Optional<AccountEntity> findByAccountNumber(Long accountNumber) {
+        log.info("looking record for account number: {}", accountNumber);
+
+        return accountsRepository
+                .findByAccountNumber(accountNumber);
+    }
+
+    @Override
     @Transactional
     public void deleteByCustomerId(Long customerId) {
         accountsRepository.deleteByCustomerId(customerId);

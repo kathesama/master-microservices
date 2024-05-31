@@ -5,6 +5,7 @@ import java.util.Optional;
 
 public interface AccountPersistenceOutputPort {
     Optional<AccountEntity> findByCustomerId(Long customerId);
+    Optional<AccountEntity> findByAccountNumber(Long accountNumber);
 
     void deleteByCustomerId(Long customerId);
 

@@ -5,7 +5,7 @@ $services = "account-service",
             "infrastructure/configuration-server",
             "eureka-server",
             "gateway-server",
-            "rabbitmq-broker";
+            "messages-broker";
 
 # Itera sobre cada servicio
 foreach ($service in $services)
